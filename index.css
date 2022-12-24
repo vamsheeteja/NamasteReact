@@ -1,0 +1,8 @@
+/* this root bgcolor is overwritten by the react container render method. */
+/* #root {
+    background-color: aquamarine;
+} */
+
+#container {
+    background-color: lightsalmon;
+}
