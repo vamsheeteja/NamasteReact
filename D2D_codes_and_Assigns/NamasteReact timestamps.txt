@@ -1,0 +1,32 @@
+Namaste React imp time stamps
+
+Lecture -2
+
+21:07 how to a make production-ready app ?
+--- in between what are bundlers?
+31:30 how to initialize npm and what all it asks ?
+
+45-1:10:0 dependency, devdependency, package-lock.json, node-modules what and why
+
+1:13:52 installing React, ReactDOM with npm
+
+1:35:00 about dist folder
+
+2:16:44 Transitive dependency
+
+-------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

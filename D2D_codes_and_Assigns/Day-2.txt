@@ -1,0 +1,147 @@
+Curiosity to Learn ... :)
+
+how to initialize npm ?
+
+> npm init -y (-y skips a lot of things) 
+(O.O) we'll get a package.json file in our folder (amazing configuration which npm needs to run itself)
+
+so now after initializing `npm` 
+we have a package manager with us
+
+npm is used to manage our packages
+
+why do we use npm ?
+we want a lot of packages to run React app (which just doesnot run on react).
+
+Now Let us just Ignite our App
+ to ignite our app we use Parcel - The Beast
+the zero configuration tool.
+
+to get parcel we write
+
+> npm install -D parcel 
+> --save-dev same as -D
+(O.O) we got node-modules folder and package-lock.json
+
+we dont want parcel to be on production, we want it to be on the developer machine.
+-D installing parcel as dev dependency (to only be on the developer machine).
+
+'devdependency' :  all the packages/modules that my project needs during development time only. eg parcel is such dependecy becoz we need a bundlers
+'dependency' : all the packages/modules that my project needs at runtime also.
+
+in package.json 
+we got devdependencies : parcel (see at bottom after installing parcel bundler)
+
+and we got package-lock.json 
+
+WHY DO WE NEED TWO package.json file
+
+package-lock.json is a VERY IMP FILE.
+
+"parcel" : "^2.8.2"
+tilde ~ approximately equivalent of version (automatically upgrade for major version)
+caret ^ Compatible version (automatically upgrade for minor version) 
+
+WHAT IS PACKAGE-LOCK.JSON ?
+package-lock.json is used to know what exact version we use on production we use package-lock 
+package-lock will tell you what exact version of library we are using.
+locks the version for us. [check again]
+
+1) NEVER HAVE TO KEEP IN .gitignore
+2) package-lock.json maintains the exact version of the library. it maintains a hash of it as well
+this hash ensures that what version of package was running on my system is exact same version running on the server/production.
+ie .. it maintains the integrity so it as hash.
+
+
+
+Node-modules: when ever we installed any package it get installed into our node-modules.
+it is like a database for our npm. superpowers are coming from here.
+it has helper code.
+
+parcel is a beast and uses a lot of other packages to be super fast.
+
+node-modules should be ADDED to .gitignore -- bcoz we can re-genereate everything in node-modules using our package-lock.json file.
+so we dont push node-modules.
+we will re-generate it on production.
+
+---------------------------------------------------
+
+Getting React from CDN is not a good way, why ?
+bcos if React version is upgraded, then again we have to change the script tags.
+and also the files are on unpkg.com what if the server is DOWN!! 
+
+and Since all the node-modules are fetched from our server it will be very Fast so it is IDEAL to install
+React in our node-modules.
+
+
+Installing React and React-DOM packages from npm.
+> npm i React
+i want it to be installed on dev environment and also in production (want in global)
+
+
+--------------------------------------------------------
+To ignite our app we use cmd
+
+`npx parcel <entry point>` npx: excute using npm.
+
+> npx parcel index.html 
+(O.O) got dist folder and parcel-cache folder
+
+dist is a development bin. dist just creates a faster development version of project and serves it on server.
+
+to build our project for production purpose.
+> npx parcel build index.html
+
+Never touch node-modules and never modify package-lock.json
+
+why we have to keep our App.js as type="module"
+bcoz browser doesnot recognize import statements in script files :( (normal js browser)
+so we have tell browser that it is a module.
+
+Parcel - The Beast
+- Created a Server
+- HMR- Hot module replacement
+- File watchers algorithmn (written in c++) .. what files are changed or modified.
+- BUNDLING
+- MINIFYING
+- CLEANING OUR code
+- Dev and Production Build
+- Super Fast Build algorithm
+- Image optimization (Images should be in our folders)
+- Caching while development
+- Compresses files (renames variables) Optimizing code
+- Compatible with older versions of browsers (browserlists in node-module) IMP
+- HTTPS on dev machine `npx parcel index.html --https`
+- Manages Port Number
+- adds polyfills
+- Consistent Hashing Algorithms
+- Zero Config
+
+Q) should we push .parcel-cache in .gitignore ?
+We SHOULD PUT .parcel-cache in .gitignore 
+bcoz any thing which we can generate on server can be put into .gitignore
+
+node-modules can be generate using - npm install
+dist - npx parcel build index.html 
+.parcel-cache - we dont create it it gets automatically created
+
+parcel will take care of it.
+
+
+
+
+Transitive Depedency (Interview Question)
+
+is a thing which will make our project Compatible with many browsers
+browserlist.dev
+
+"browserlist": [
+    "last 2 versions"
+]
+
+"last 2 Chrome versions"
+
+// it means it (PARCEL) will make sure that my project is DEFINITELY WORKing in last 2 versions of all web browsers and 
+Also it may or may not work in all the previous versions ....
+
+
