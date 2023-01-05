@@ -1,0 +1,7 @@
+Namaste React imp time stamps
+
+Lecture -2
+
+21:07 how to a make production-ready app ?
+
+

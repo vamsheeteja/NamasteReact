@@ -1,0 +1,47 @@
+Chapter 01 - Inception
+
+1) What is Emmet?
+Emmet is a free add-on for your text editor. It allows you to type shortcuts that are then expanded into full pieces of code. By using Emmet, developers type less, they save both on keystrokes and time.
+
+2)  Difference between a Library and Framework?
+A library provides a set of helper functions/objects/modules which your application code calls for specific functionaloty.
+- Libraries typically focus on narrow scope, so their apis tend to be smaller.
+- used for code reuse,
+- Ex calling findLastIndex(string) of a certain library
+
+Framework: has DEFINED OPEN or UNIMPLEMENTED functions or objects which the user writes to create a custom application.
+- It has a wider scope and inclides almost everything necessary to make a user application as per his own needs.
+
+3) What is CDN? Why do we use it?
+Content Delivey Network is a network of servers that distributes content from an "origin" server throughout the world by caching content close to where each end user is accessing the internet via a web-enable device.
+
+-A CDN allows for the quick transfer of assets needed for loading Internet content including HTML pages, javascript files, stylesheets, images, and videos
+
+4) Why is React known as React?
+Since React is a front-end framework or the “View” in MVC, this means that as the user clicks around and changes the app's data, the view should “react” or change with those user events.
+
+5) Crossorigin in Script tag?
+The crossorigin attribute sets the mode of the request to an HTTP CORS Request. 
+
+- Web pages often make requests to load resources on other servers. Here is where CORS comes in. 
+
+- A cross-origin request is a request for a resource (e.g. style sheets, iframes, images, fonts, or scripts) from another domain.
+
+
+6) React vs ReactDOM
+
+React library is responsible for creating views
+
+ReactDOM library is responsible RENDER UI in the browser.
+
+React contains functionality utilised in web and mobile apps.
+is responsible for creating views 
+
+ReactDOM functionality is utilised only in web apps.
+responsible to actually render ui in the browser.
+
+
+7) What is difference between react.development.js and react.production.js files via CDN?
+
+the development.js is used dev reasons.
+You have Source Maps, debugging and often times hot reloading ability in those builds. The production build, on the other hand, runs in production mode which means this is the code running on your client's machine.
