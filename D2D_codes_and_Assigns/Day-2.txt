@@ -116,6 +116,7 @@ Parcel - The Beast
 - adds polyfills
 - Consistent Hashing Algorithms
 - Zero Config
+- Tree shaking - removing unwanted codes
 
 Q) should we push .parcel-cache in .gitignore ?
 We SHOULD PUT .parcel-cache in .gitignore 

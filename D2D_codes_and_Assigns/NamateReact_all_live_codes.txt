@@ -75,5 +75,228 @@ App.js
 ADDED AT STARTING
 import React from "react";
 import ReactDOM from "react-dom/client"
+---CODE---
+import React from "react";
+import ReactDOM from "react-dom/client"
+
+const heading1 = React.createElement(
+    "h1",
+    {id: "h1", key:"h1"},
+    "Namaste from React13"
+    );
+
+const heading2 = React.createElement(
+    "h2", 
+    {id: "h2", key:"h2"}, 
+    "Namaste from React23"
+    );
+
+const container = React.createElement(
+    "div",
+    {
+        id:"container"
+    },
+    [heading1, heading2], // React Reconcilation Key: When ever we have list of children, we have to give keys to each of them. key can be anything which uniquely identifies it
+    "Namaste🙏 i am a container from React."
+    
+)
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+
+
+root.render(container);
 
 ============================================================================================================
+
+10123 - Laying the Foundation
+
+Babel, keys - React key Reconcilation (imp), JSX, Components, functional component bts is just a js function (piece of code)
+
+Nice questions
+// Q.1 will jsx work if parcel is not installed as babel dependency in parcel
+jsx wont work if parcel is not there, but if babel is there then it will work.
+// Q.2 Is Component hoisted.
+at the end of the day Component is simple js function so think..
+
+BEHIND THE SCENES
+Jsx behind the scenes using React.createElement
+React.createElement bts is an object 
+and object are rendered on the html dom.
+
+
+Lecture 3 
+
+Pain of using React.createElement()
+
+App.js file
+
+"""start
+
+import React from "react";
+import ReactDOM from "react-dom/client"
+
+
+/*
+<div>
+    <h1></h1>
+    <ul> 
+        <li>About us</li>
+        <li>Support<</li>
+        <li>Home</li>
+    </ul>
+</div>
+
+*/
+// React Reconcilation Key: When ever we have list of children, we have to give keys to each of them. key can be anything which uniquely identifies it
+// we can write any thing in jsx {1+2}, call a function {Title()}
+
+// This will be a HUGE MESS...................
+const heading2 = React.createElement(
+    "h2", 
+    {id: "h2", key:"h2"}, 
+    "Namaste from React23"
+    );
+
+const container = React.createElement(
+    "div",
+    {
+        id:"container"
+    },
+    [
+        React.createElement(
+        "h1",
+        {
+            id: "h1", 
+            key:"h1"
+        },
+        "Namaste from React"
+        ), 
+        React.createElement(
+            "ul",
+            {},
+            [
+                React.createElement(
+                    "li",
+                    {},
+                    "About Us"
+                ),
+                React.createElement(
+                    "li",
+                    {},
+                    "Support"
+                ),
+                React.createElement(
+                    "li",
+                    {},
+                    "Home"
+                )
+            ]
+        )
+    ], 
+    "Namaste🙏 i am a container from React."
+    
+)
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+
+
+root.render(container);
+
+"""end
+
+
+App.js file
+// functional components
+
+"""start
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+
+const heading = (
+  <h1 id="title" key="h1">
+    Namaste React
+  </h1>
+)
+
+// React Component
+// Functional - NEW way of writing component: a piece of js code (js function)
+// - Name of component starts with capital letter - good practise
+
+const HeaderComponent = () => {
+  // if one line return the --> return <h1> Namaste React functional component </h1>; (semicolon)
+  // for multiple lines use parenthesis.
+  // we can aslo skip 'return' statement.
+  return (
+    <div>
+      <h1> Namaste React functional component </h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
+
+// also correct // VALID
+// (O.O) obervation. when we use below kind of definition to create funcitonal definitions. Then the component is ONLY RENDERING if the component name is STARTING WITH A CAPITAL LETTER.
+
+const HeaderComponent2 = () => (
+  <div>
+    <h1> Namaste React functional component 2</h1>
+    <h2>This is a h2 tag</h2>
+  </div>
+)
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+root.render(heading)
+
+
+"""end
+
+// practice This
+
+App.js
+"""start
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+
+// JSX..
+const heading = (
+  <h1 id="title" key="h1">
+    Namaste React
+  </h1>
+)
+
+// Functional Component : a normal javascript function
+const Title = () => (
+  <h1 id="title" key="h1">
+    Title: Namaste React
+  </h1>
+)
+
+const stringxyz = 'cool'
+
+// Functional component
+const HeaderComponent = () => {
+  return (
+    <div>
+      {console.log('Any JS code!!')}
+      {stringxyz}
+      {1 + 2}
+      {/* of Freaking man! Since a Component is just a normal JS function we can call it like this...OP */}
+      {Title()}
+      {/* using components */}
+      <Title /> {/* This is component composition / composing components*/}
+      {/* to use a JSX (a normal variable) or react element (react object) in a component we use these curly braces*/}
+      {heading} omg React.js is Awesome!!
+      <h1> Namaste React functional component </h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+// async defer
+root.render(<HeaderComponent />) // rendering a react functional component
+
+"""end
