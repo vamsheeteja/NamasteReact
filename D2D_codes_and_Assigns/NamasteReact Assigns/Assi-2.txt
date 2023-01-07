@@ -1,0 +1,126 @@
+1) What is `NPM`?
+- NPM has many names. It is a package manager. Whenever we are building a react application, to make it more powerful our application would (need) depend on many different packages. And infact those packages depend on other packages. So the part of downloading and maintaining these WHOLE BUNCH of packages is carried out by NPM..thus making life of developer `Easy`.
+
+
+2) What is `Parcel/Webpack`? Why do we need it?
+- `Parcel/Webpack` are BUNDLERS.
+- Bundler is a development tool that combines many js code files into a single one that is production-ready loadable in the browser.
+- fantastic feature is - it generates a dependency graph as it traverses your first code files.
+- These have abstracted the pain of tooling and provide an optimized and performance-centric solution to generate static assets.(js file/css file/images that dont change at server)
+
+#ParcelTheBeast -- Akshay Saini
+Pros:
+* easy to set up
+* code tranformation
+* Code splitting - provide an easy solution to split code into various bundles based on size or dynamic import syntax.
+* production-builds - provide a well-thought solution to generate a production-ready build.
+* Expandable - easy to add plugins to extend the tooling functionality sush as babel tranformation plugin to support the latest ES2020 syntax, jsx syntax, and more.
+* Native support of IMPORT
+* HMR- Hot Module Replacement - Update module change automatically in the browser without a full reload
+* Friendly error loggin - in case of any compiler error, pin point code frame.
+and many more.
+
+3) What is `.parcel-cache`?
+- The cache folder stores information about the project when Parcel builds it, so
+that when it rebuilds, it doesn't have to re-parse and re-analyze everything from scratch.
+- this the reason why parcel can be so Fast in dev mode.
+
+comitting it to git is a BAD idea as it can be regenerated on the server. 
+
+
+4) What is npx? 
+- npx us nothing but execute using npm. It is npm execute. Think of npx as npm run.
+- when you installed npm above 5.2.0 version then automatically npx will installed. It is an npm package runner that can execute any package that you want from the npm registry without even installing that package.
+
+5) What is the difference between dependencies vs devDependencies?
+- Dependencies: are the packages that our project requires at the production (ofcourse we'll need them in the development).
+- DevDependencies: are the packages that our project requires only at the development time (they can be re-generates at the production). 
+
+
+6) What is Tree Shaking?
+Tree shaking is a term used in JS context to describe the removal of dead code.
+- It relies on the import and export statements to detect if code modules are exported and imported for use between JS files.
+
+7) What is Hot Module Replacement?
+- VS Code's Live Server extension is an example of HMR - Hot Module Replacement.
+- It actually uses a File Watcher's algorithm that only modifies the changes and gives us a fast reload in the development environment.
+- Hot Module Replacement (HMR) exchanges, adds, or removes modules while an application is running, without a full reload. This can significantly speed up development in a few ways: Retain application state which is lost during a full reload. Save valuable development time by only updating what's changed.
+
+8) List down your favourite 5 superpowers of Parcel and describe any 3 of them in your own words
+
+My fav Super powers of parcel-the beast are:
+- Zero Conflguration setup
+- Easy to set up
+- Expandable
+- Hot Module Replacement
+- Friendly error logging.
+
+Expandable : in case if we need any other plugins/packages to be used in our project, we can use it so as parcel is used widely around the globe and we can find many awesome things or ways to install kind of packages into our project in easy ways.
+
+Hot Module Replacement: This is a awsome feature that parcel provides it users. It save a lot of time in the development. It is SO Sweet that when i save the file and the Changes reflect automatically on the server (Parcel the beast also serves out project on a localhost server).
+
+Friendly error logging: Parcel gives really Cute error messages on the windows with beautiful colored font styles. It really excites me and increases my confidence level to tackle each and every error ti shows me up and fix it up in my project.
+
+Parcel is truely a beast taking care of all the bundling on it self without somuch of configurations from developers end. Thank you beast,, You are just OPP!!.
+
+9) What is '.gitignore'? What should we add and not add into it?
+gitignore is text file (not .txt) that is added to out git repository to tell the git which files to not to be kept tracked. 
+- We include the filename or folder names in .gitignore that we dont want git to be keeping track or push to the remote repository.
+
+As far as our project we have to not keep those files in the gitignore which van be Re-generated on the server.
+
+YOU HAVE TO KEEP THESE IN GITIGNORE
+
+- node-modules folder: all these can be re-generated at the server via the package-lock.json
+
+- parcel-cache: it will be recreated at the server.
+
+- dist: this also..
+
+
+keep in mind to never keep package-lock.json in your gitignore 
+
+because package-lock.json tells the exact version of the package that is in the project. It is the proof. if any thing goes wrong.
+
+10) so we never have to put it in the gitignore and never have to touch it or modify it.
+
+11) What is `node_modules` ?
+it is HUGE folder that get into our project when we install parcel.
+React needs parcel to make our app faster, And parcel need few more dependencies to run smoother and those few more dependencies require other dependencies to work upon. (So this is basically called the Transitive Dependencies ). Thats why it is so Huge is size.
+
+And not a good idea to push it on git. explained above.
+
+12) What is dist folder?
+dist is the build folder that gets created when we execute our application for the first time using parcel along with the parcel-cache file.
+if contains all the files and folders which can be hosted in the server. 
+It is the bundeled file/folder.
+
+it can be put into the gitignore as it can be regenerated on the server.
+
+13) What is browserlists?
+browserlist is a package that comes with parecel in the node-modules which makes our application compatible to work on the various versions and also the previous version of it. (As most of the browser do not support the latest features of tech like JS)
+
+The syntax of npm version looks like 
+Major.Minor.Patch
+        1 . 2 . 5   
+
+~ Tilde : Use to match the most recent patch version. It freezes the major and minor version.
+~1.2.0 will update all 1.2.x
+ 
+^ Caret : it is userd for automatically updating the minor updates along with patch updates.
+^1.2.0 will update all 1.x.x (used by npm as default)
+
+14) Script type attibute:
+- `type` attribute if not present then web browser treats it like a "classic script", containing javascript code.
+
+module: this values causes the code to be treated as js module. The processiong of script contents is deffered.
+Unlike classic scripts, module scripts require the use of the CORS protocol for cross-origin fetching.
+
+importmap
+
+Any other value : will be ignored.
+
+
+blocking: This attribute explicitly indicates that certain operations should be blocked on the fetching of the script. The operations that are to be blocked must be a space-separated list of blocking attributes listed below.
+
+render: The rendering of content on the screen is blocked.

@@ -1,29 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client"
+import ReactDOM from 'react-dom/client'
 
-const heading1 = React.createElement(
-    "h1",
-    {id: "h1"},
-    "Namaste from React13"
-    );
-
-const heading2 = React.createElement(
-    "h2", 
-    {id: "h2"}, 
-    "Namaste from React23"
-    );
-
-const container = React.createElement(
-    "div",
-    {
-        id:"container"
-    },
-    [heading1, heading2],
-    "Namaste🙏 i am a container from React."
-    
+const Title = () => (
+  <h1 id="title" key="h1">
+    Namaste React
+  </h1>
 )
-const root = ReactDOM.createRoot(document.getElementById("root"));
 
+// Functional component : a normal javascript function
+const HeaderComponent = () => {
+  return (
+    <div>
+      <Title /> {/* Good practice */}
+      <h1> Namaste React functional component </h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
 
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
-root.render(container);
+// async defer
+root.render(<HeaderComponent />) // rendering a react functional component
