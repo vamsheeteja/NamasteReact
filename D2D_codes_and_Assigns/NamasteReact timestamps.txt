@@ -16,14 +16,69 @@ Lecture -2
 
 -------------------------------------------------------------------------------------------------------
 
+Lecture -4 
 
+IMP: carausel for offers display for differenct locations, cities based.. 
+1:40:00 Config Driven UI
 
+#1
+(props) can be any other name
 
+#2
+to access -> props.<param_name> param_name which use have used to pass from a container.
 
+#3
+BADASS things
+destructuring the object  props to {restaurant} <- passing only this
 
+instead of props
+({restaurant}) // now we do not need props.
 
+#4
+destructuring restaurant object
 
+const [name, cuisines, cloudinaryImageId, avgRating] = restaurant;
 
+#5 Amazing!!!!! stuff
+destructuring Everything on the fly....................
+
+...RestaurantList[0].info
+my RestaurantList[0].info has all my props which i will use 
+so use '...' to pass all the data as props..
+
+OMGGGGG
+
+const Body = () => {
+  return (
+    <div className="restaurant-list">
+      {/* Props inside React-- pass props : passing some data into a component (either functional or class) */}
+      <RestaurantCard {...RestaurantList[0].info} />
+      <RestaurantCard {...RestaurantList[1].info} />
+      <RestaurantCard {...RestaurantList[2].info} />
+      <RestaurantCard {...RestaurantList[3].info} />
+      <RestaurantCard {...RestaurantList[4].info} />
+      <RestaurantCard {...RestaurantList[5].info} />
+      <RestaurantCard {...RestaurantList[6].info} />
+      <RestaurantCard {...RestaurantList[7].info} />
+      <RestaurantCard {...RestaurantList[8].info} />
+      <RestaurantCard {...RestaurantList[10].info} />
+      <RestaurantCard {...RestaurantList[11].info} />
+      <RestaurantCard {...RestaurantList[12].info} />
+      <RestaurantCard {...RestaurantList[13].info} />
+    </div>
+  )
+}
+
+2:33:37 Virtual DOM in React
+
+2:47:46 
+Reconcilation in React uses a DIFF algorithms , that Diff algorithm finds out the different between Trees and 
+only Re-render the specific portions of the app which is found out by diff algorithm.
+
+That why to help this algo we use keys.
+
+React Fiber is a Reconcilation Engine came in React 16.
+This new Reconcilation Engine is responsible for DIFF.
 
 
 

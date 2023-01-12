@@ -1,0 +1,84 @@
+1. Is JSX mandatory in React ?
+	NO not really. In fact in the beginning section of course we haven't used JSX. We were using the React.createElement(). JSX was built for the ease of writing the html like structure for the developers in the code. Infact jsx itself then is converted to React.createElement by the Babel or any transpilers.
+
+	JSX is not a requirement for using React. Using React without JSX is especially convenient when you don't want to set up compilation in your build environment. Each JSX element is just syntactic sugar for calling React.createElement(component, props, ...children)
+
+2. Is ES6 mandatory for React ?
+	It is not mandatory but is highly recommendable. The latest projects created on React rely a lot on ES6.
+
+3. {TitleComponent} vs <TitleComponent> vs <TitleComponent> </TitleComponent>
+	{TitleComponent}: This values describes the TitleComponent as a js expression or a variable. 
+	- The {} can embed any js expression or a variable inside it.
+
+	<TitleComponent />: This value represents a component that is basically returning some JSX value. (In simple terms TitleComponent is a function that is returning  a JSX value.) A component is written inside the < />.
+
+	<TitleComponent> </TitleComponent> : and <TitleComponent /> are equivalent only when <TitleComponent /> has no children/ child components. The opening and closing tags are created to include the child components.
+
+4. How to write comments in jsx.
+	we can write it inside the {} braces. eg . {/* */} It's a js thing.
+
+5. What is <React.Fragment> </React.Fragment> and <></>
+	We can return only one parent element from a component. so we want to structure any component like for example AppLayout component contains all the remaining components like body, header, footer components 
+
+	const AppLayout = () => {
+		return (
+			<header />
+			<body />
+			<footer />
+		);
+	}
+
+	So we cannot return many components it should have / embed in single parent element. 
+
+	So one such solution is to embed all these into a <div> tag. But this will make out code cumber some as we already have divs in our each component. So in such cases we use React.Fragment to tell the browser that this is react fragment and we can skip the use of div tag.
+
+	<React.Fragment> shorthand is <> </>
+
+	const AppLayout = () => {
+		return (
+			<>
+				<header />
+				<body />
+				<footer />
+			</>
+		);
+	}  
+
+	Now in browser we dont find any such tag and this works fine without any error as this is a React thing for us.
+
+	we can't apply css for this.
+
+
+5. What is virtual DOM?
+	Virtual DOM is a representation of the actual HTML DOM. What exaclty happens is we any changes occur in the DOM (on ui) then React check diff between actual DOM and virtual DOM and updates only those nodes where modification is done or which are newly created. So in this way react only renders the nodes which are modified.so this is way React is so fast.
+
+6. What is Reconciliation in React ?
+	Reconciliation is an algorithm to DIFF one tree with another to determine which parts need to be changed and then update the original DOM with it. ReactJS users a new reconciliation engine called Fiber since version 16.0
+
+7. What is React Fiber?
+	It is Reacts Reconciliation engine.
+	
+8. Why do we need keyss? and When do we need keys in React?
+	In react suppose if we have 3divs (1, 2, 3) after we added one more div (4, 1, 2, 3).
+	- React doesn't know what order they we actually present. So it will re-render everthind(4, 1, 2, 3)
+	- React uses keys to uniquenly identify the sibling tags (one parent - many children of same tag; eg one <div> many <h1> ) so if we use keys React will find that 4 was not present in the beginning so it will now render only the key 4th tag. This makes react so fast.
+	
+9. Can we use index as keys in React ?
+	Yes we can use but React uses key attribute to track the changes in the list.
+	no key <<<< index key <<<<<<<< key
+	
+	We might face the following issues when we use index value as key attribute when creating a list:
+	Performance issues due to unnessary re-renders.
+	Issues in data mapping in case list items are sorted, filtered or deleted.
+	
+10. What is props in React ? Ways to pass props.
+	It's an abbrevation for Properties. These are like function arguments in JS and attribute in HTML.
+	To send props into a component, use the same syntax as HTML attributes.
+	
+	Props are arguments passed into React Components. Props are used in React to pass data from one-component to another (from parent component to a child component(s)). They are useful when you want the flow of data in you app to be Dynamic.
+	
+	COME AGAIN how many ways to pass props .
+	
+11. What is congif driven UI ?
+	
+	The ui displayed is computed first at the backend. (COME AGAIN)
