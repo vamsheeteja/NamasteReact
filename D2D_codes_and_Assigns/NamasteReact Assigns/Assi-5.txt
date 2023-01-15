@@ -1,0 +1,92 @@
+Lecture - 5 Lets get Hooked..
+
+What is a State in ReactJS ? 
+	- The state is a built-in React object that is used to contain data or information about the Component.
+	A Component's state can change over time, whenever it changes, the component re-renders. The change in state can happen as a response to user action or system generated events and these changes determines the behavior of the component and how it will render.
+	
+	A State can be modified based on user action or network changes
+	Every 
+
+1. What is the differece between Named Export, Default export and * as export?
+
+	- Named and Default exports are not React-centric ideas. They are es6 features.
+
+	Named Export: exports without default tag are named exports.
+	
+	- When you want to import a named component, you use the same name it was exported with. Names must be imported inside curly brackets. 
+	
+	- example If you want to export restaurantCard container
+
+	export const restaurantCard = () => {
+
+		return (.....);
+
+	}
+
+	// now to import this in App.js use Named IMPORT 
+
+	import {restaurantCard} from ./containers/RestaurantCard(.js)
+	
+	
+	- Opt-in Aliasing You can rename your exports with an alias if you have collisions in a file. This is scoped to the file doing the import.
+		
+		import {RestaurantCard as ResCard} from ./containers/RestaurantCard(.js)
+	
+	- Multiple Exports Per File
+	
+		Named exports allow multiple exports in a single file.
+
+	Default export : exports with default tag are named exports.
+	
+	- When importing a default export, you don’t use curly brackets.
+	
+	- Default Aliasing
+		When you import a default export, you can give it whatever name you want.
+		
+	- Single Export
+		modules can only have one default export.
+	
+	- same example 
+
+		const RestaurantCard = () => {
+		return (.....);
+		}
+
+	// add this line
+	
+	export default RestaurantCard;
+	
+	// to import it 
+	
+	import RetaurantCard from ./containers/RestaurantCard
+	
+	Combining
+		You can combine default and named exports in a single file.
+	
+	if we want to import all the containers from a file the use
+	
+	import * from ./containers/RestaurantCard
+
+
+2. What is the importance of config.js file?
+
+Config.js file  (or Constants.js) file is a file where we store all the CONSTANTS or Hardcoded Values which possibly may get used in our whole application. It is basically to REUSE the values. Reusability.
+
+3. What are React Hooks?
+	
+	React Hooks are at the EOD normal JS functions. These are created by meta devs to perform specific function when building react application.
+	- Generally a Hook name starts with `use`
+	- So every Hook is js function that is associatied a specific functionality to it.
+	 Example 
+	 
+	1) useState() : this is going to create a local state variable. It returns an array in which the first element is the name of the local variable. The 2nd parameter the callback function that is used to update the value of the local variable.
+	
+	So generally if we want to modify a variable (keep a local variable in sync with the UI) in React, we just cant simply update it like we do in normal programming. We need to use useState hooks.
+	
+		- with this React keeps track of the local variable (create with useState()) and RE-RENDERS the whoole component whenever this STATE variable is modified.
+		- Reconciliation is Happening.
+		
+	2) useEffect() and so on...
+	
+4. Why do we need a useState Hook?
+	Explained Above Clearly  ......

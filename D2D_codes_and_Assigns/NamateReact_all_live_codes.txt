@@ -418,3 +418,496 @@ Optional Chaining
 ------------
 
 Go through timestamps file also
+
+---++++++++============++++++++++++++++========
+
+
+Lecture 5 Let's get Hooked..
+
+(new) folder created 'src'
+moved App.js into it.
+inside src (new) folder created named 'components' 
+
+App.js
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+// Default Import - In the defaault export (import) we can rename like header.. VALID..
+import Header from './components/Header.js' we can write header.js or .jsx
+// Named Import 
+import { Title } from './components/Header' 
+//  This is not object De-Structuring.
+const {Title} = obj; this wont work 
+obj.Title not a valid thing
+
+// suppose if we want to import all the components
+import * as OBj from "../components/Header"
+
+// Represent it as js object
+--- data js object - removed for better readability.
+
+const RestaurantCard = ({ cloudinaryImageId, name, cuisines, avgRating }) => {
+  return (
+    <div className="card">
+      <img
+        src={
+          'https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/' +
+          cloudinaryImageId
+        }
+      />
+      <h2>{name}</h2>
+      <h3>{cuisines.join(', ')}</h3>
+      <h4>{avgRating}⭐</h4>
+    </div>
+  )
+}
+
+// no key (Not acceptible) <<<< Index key (use ONLY if you don't have anythind) <<<<<<<< unique key (best practice)
+const Body = () => {
+  return (
+    <div className="restaurant-list">
+      {restaurantList.map((restaurant) => {
+        {
+          /*... - SPREAD Operator */
+        }
+        return <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+      })}
+    </div>
+  )
+}
+
+const Footer = () => {
+  return <h4> Footer </h4>
+}
+
+// Structure you layout
+const AppLayout = () => {
+  return (
+    <React.Fragment>
+      <Title />
+      <Header />
+      <Body />
+      <Footer />
+    </React.Fragment>
+  )
+}
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+// async defer
+root.render(<AppLayout />) // rendering a react functional component
+
+
+----- (new file created) Header.js
+
+// export const Title = () => ( -- since i dont want to export it i want it to be Title in Header component.
+const Title = () => (
+  // another way of exporting, ie exporting by a name
+  <a href="/">
+    <img
+      className="logo"
+      alt="logo"
+      src="https://yt3.ggpht.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj"
+    />
+  </a>
+)
+
+const Header = () => {
+  return (
+    <div className="header">
+      <Title />
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default Header // We can just export default only one thing.
+
+-- Header.js #2
+// export const Title = () => ( -- since i dont want to export it i want it to be Title in Header component.
+const Title = () => (
+  <a href="/">
+    <img
+      className="logo"
+      alt="logo"
+      src="https://yt3.ggpht.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj"
+    />
+  </a>
+)
+
+const Header = () => {
+  return (
+    <div className="header">
+      <Title />
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default Header // We can just export default only one thing.
+
+(new file created) Body.js
+const Body = () => {
+  return (
+    <div className="restaurant-list">
+      {restaurantList.map((restaurant) => {
+        {
+          /*... - SPREAD Operator */
+        }
+        return <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+      })}
+    </div>
+  )
+}
+
+export default Body
+
+(new file) Footer.js
+
+(new file) config.js will contain all the HARDCODED Values of my program
+
+(Body.js modified) VERY IMPORTANT useState() and HOOKs Explained from timestamp 55:00 Lec-5
+
+-- 1
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+
+
+const Body = () => {
+  let searchTxt = 'KFC'
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchTxt}
+          // #1 onChange={(e) => console.log('kachabadam')}
+          // whenever input is changed this onChangeInput function will be called.
+          // #2 onChange={(e) => console.log(e.target.value)} When we click any char it get displayed on the console. But WHY DOES ITS NOT PRINTING ON THE SEARCH INPUT ? -IMP
+          // Ans: When ever you change/write something inside the input .. React RE-RENDERS THE COMPONENT BUT THE searchTxt value is STILL the same. We have HARDCODED THAT VALUE. we have to somehow MODIFY THAT VALUE.
+
+          // can i change the value from here
+          onChange={(e) => (searchTxt = e.target.value)} // this wont work...
+
+          // To make this work
+          // LOCAL VARIABLES LIKE searchTxt = 'KFC' are NOT PREFERRED IN REACT.
+          // when ever you have to change the variable that you have used
+          // If you need to maintain a variable that changes itself then you need to maintain a variable that is a React kind of variable ..
+
+          // The React variable is a kind of State Variable
+          // Every component in React maintains a State. You can put all the variable into the State
+          // Every time you create a local-variable it is recomm to use State in it.
+
+          // What is State?
+        />
+        <button className="search-btn">Search</button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+-- 2
+
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState } from 'react'
+
+const Body = () => {
+  // Every COMPONENT IN React maintains a State and we can put all the variables into that state.
+  // And every time we have to create Local Variable you use STATE init.
+
+  // WHAT IS STATE ?
+  // WHAT IS HOOKS ?
+  // Hooks are nothing kind of normal FUNCTIONS. Every HOOK has a specific Function associated with it
+  // WHAT IS useState ? // useState() is used to create State variables
+
+  // useState() HOOK
+  // searchText is local state variable
+  const [searchText] = useState('KFC') // KFC is the default value. 
+  // The useState() Hook/function returns an Array. First element is the variable name `searchText`
+  
+  /*
+    * Input doesnt work like that in react.so we write input we need to do Data mining to it. need to do 
+    * ONE Way - data binding.
+
+  */
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => (searchTxt = e.target.value)} // this wont work...
+        />
+        <button className="search-btn">Search</button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+
+-- 3 
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState } from 'react'
+
+// WHAT IS STATE ?
+// WHAT IS HOOKS ?
+// Hooks are nothing kind of normal FUNCTIONS. Every HOOK has a specific Function associated with it
+// WHAT IS useState ? // useState() is used to create State variables
+
+const Body = () => {
+  const searchVar = useState()
+
+  const [searchText, setSearchText] = searchVar // js destructing.
+
+  // const [searchText, setSearchText] = useState('hellow') // returns = [variable name, function to update the variable]
+
+  // this concept of creating a local variable in React is equivalent  to
+  // const stext = "hellow"; -- in js
+
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => (searchTxt = e.target.value)} // this wont work...
+        />
+        <button className="search-btn">Search</button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+-- 4
+
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState } from 'react'
+
+// WHAT IS STATE ?
+// WHAT IS HOOKS ?
+// Hooks are nothing kind of normal FUNCTIONS. Every HOOK has a specific Function associated with it
+// WHAT IS useState ? // useState() is used to create State variables
+
+const Body = () => {
+  const [searchText, setSearchText] = useState('hellow') // returns = [variable name, function to update the variable]
+
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }} // we get automatically an event property `e`. From this event prop i can read what ever we type on the search box using e.target.value
+        />
+        <h1>{searchText}</h1>
+        {/* This is called a 2 way binding. Becz we are updating the searchText and it is getting update and also showwing the updated value also We are writing and Reading searchText at atht sametime.*/}
+        <button className="search-btn">Search</button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+-- 5
+
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState } from 'react'
+
+// WHAT IS STATE ?
+// WHAT IS HOOKS ?
+// Hooks are nothing kind of normal FUNCTIONS. Every HOOK has a specific Function associated with it
+// WHAT IS useState ? // useState() is used to create State variables
+// Why do we use State variables when we have local variables ?
+// Everytime you want your variables to be in sync with the UI you need to use your state variables.
+// For example if you have a local variable let a = 10; now if some component changed its value to 11 then React doesn't know that it was changed and so it will not be RE-RENDERED..that is it still be 10 on the UI. So for telling react that a variable need to be in sync with UI we need to use useState() hook.
+const Body = () => {
+  const [searchText, setSearchText] = useState('hellow') // returns = [variable name, function to update the variable]
+
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
+        />
+        <h1>{searchText}</h1>
+        <button className="search-btn">Search</button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+
+-- 6 import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState } from 'react'
+
+// WHAT IS STATE ?
+// WHAT IS HOOKS ?
+// Hooks are nothing kind of normal FUNCTIONS. Every HOOK has a specific Function associated with it
+// WHAT IS useState ? // useState() is used to create State variables
+
+const Body = () => {
+  const [searchText, setSearchText] = useState('hellow') // returns = [variable name, function to update the variable]
+
+  //lets create one more state variable
+  const [searchClicked, setSearchClicked] = useState('false')
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
+        />
+        <h1>{searchText}</h1>
+
+        <h2>{searchClicked}</h2>
+        {/* SO HOW IT IS APPEARING ON THE UI
+         * When we create a varible using useState, React is WATCHING this variable, React is keeping a track of this variables.
+         * When i click on `Search` button, my whole component GETS RE-RENDERED
+         * that is WHENEVER THIS VARIABLES GETS UPDATED THE WHOLE COMPONENT GETS RE-RENDERED.
+         * ITS IS destroying the Body component and Re constructing the component again. It is happening very fast. RECONCILIATION IS HAPPENING.
+         * It is doing a DIFF algorithm
+         */}
+        <button
+          className="search-btn"
+          onClick={() => {
+            if (searchClicked === true) searchClicked('false')
+            else setSearchClicked('true')
+          }}
+        >
+          Search
+        </button>
+      </div>
+      <div className="restaurant-list">
+        {restaurantList.map((restaurant) => {
+          return (
+            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+-- 7
+-- above same code 
+-- represents only small portions of the code
+
+        <h1>{searchText}</h1>
+
+        <h2>{searchClicked}</h2>
+        <button
+          className="search-btn"
+          onClick={() => {
+            // create a TOGGLE YEYYY!
+            // React just updates this portion after Re-rendering this whole component.
+            // It is using Reconciliation algorithm that uses a DIFF algorithm
+            if (searchClicked === 'true') setSearchClicked('false')
+            else setSearchClicked('true')
+          }}
+        >
+
+---
+function filterData(searchText, restaurants) {
+  const filterData = restaurants.filter((restaurant) =>
+    restaurant.info.name.includes(searchText),
+  )
+  return filterData
+  // Above code in one line
+  // return restaurants.filter((restaurant) => restaurant.info.name.includes(searchText))
+}
+
+-- Last from App.js of Lect 5
+
+// questions 
+
+why after updating the useState() it was not working then ?
+search bar was not working
+
++++===============++++++++++++++++======================================
+
+

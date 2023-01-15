@@ -81,6 +81,28 @@ React Fiber is a Reconcilation Engine came in React 16.
 This new Reconcilation Engine is responsible for DIFF.
 
 
++++++++++++++++===================-------------------======================
+
+Lecture 5 
+
+51:00 Implementing search box HOOKS
+
+56:10 React uses ONE-Way Data Binding
+
+2:01:10 Working of filter data
+
++++++++++++++++++=================-------------------+++++++++++++++++++---
+
+team 
+
+
+
+
+
+
+
+
+
 
 
 
