@@ -1,0 +1,237 @@
+Lecture -6 Finding the Path..
+
+* ADD NEW CSS STYLES
+
+Config Driven UI
+Any config can power the UI
+
+Hooks
+When you want to create Local variables in a React component you have to use a STATE VARIABLES useState() (HOOKS).
+
+What is DOM at EOD ? 
+its a big JS object.
+
+Why React is FAST ?
+It is because of its fast DOM manipulation
+
+How it has faster dom manipulation - bcoz it has a super powerful DIFF algo React FIBER.
+
+React track the variables which are local STATE varibles (created using useState())
+
+named import
+import {useState} from "react";
+
+
+#1 Header.js
+
+change Title tilt and State variable change testing..
+
+import { useState } from 'react' -- added
+
+const Title = () => (
+  <a href="/">
+    <img
+      className="logo"
+      alt="logo"
+      src="https://yt3.ggpht.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj"
+    />
+  </a>
+)
+
+const Header = () => {
+  const [title, setTitle] = useState('Food Villa')
+
+  // Whenever we change the STATE VARIABLE React does a KIND of REFRESHES THE COMPONENT. ==========================
+  // the whole Component gets re-rendered when some is changed in a STATE VARIABLE.==========================
+  console.log('render()')
+
+  return (
+    <div className="header">
+      <Title />
+      <h1>{title}</h1>
+      <button
+        onClick={() => {
+          title === 'Food Villa'
+            ? setTitle('Namaste Restaurants')
+            : setTitle('Food Villa')
+        }}
+      >
+        Change Title
+      </button>
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default Header // We can just export default only one time.
+
+#2=================
+Body.js
+
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search"
+          value={searchText}
+          // BINDING MY STATE VARIABLE TO INPUT BOX. whenever my input gets modified on ui it will be displayed on UI on every change.  +++++
+            // YOU CAN SEE IN DEV TOOLs IN => index.html header -> value attribute +++
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
+        />
+
+Microservices: There are 100s of Microservices in a Real time project.
+
+In older days -----
+
+The project was containing all the things like API, UI was inside the API, Backend everything was inside only ONE project. SMS sending, notification, 
+authentication, UI all was in same folder/project. known as Monolithic Architecture.
+
+- to change one button we were to deploy whole project.
+
+- so in Microservices instead of having just ONLY one project we have small small different Projects.
+
+- UI , Backend, API, Notification, Logs, Authentication project 
+
+- there can be 10 ui projects, 20 backend project and many more 
+
+- every project can be hosted on different ports..
+
+- every project may use different Languages based on performance/ dependends on BEST USECASE..
+
+- ui can be written in React, backend api using Java, Notification using Python, logs using Golang, authentication Golang
+
+-- All these applications are connected through different Ports
+        /
+        /dapi
+        /notifications
+
+Advantages of Microservices
+    Seperation of Concern or Single Responsibility : every small microservices have their own work to do, they donot bother about other microservices
+
+* Easy to Maintain
+* to testing
+
+-- Now we'll Explore the World : Talk to different apis
+
+1:15:00
+
+- fetch: it comes from `window`. This is available to us from js engines window.
+fetch(api)  - passed api and it calls that api.
+
+Q) WHERE SHOULD WE CALL MY API? WHERE WE NEED OUR API?
+
+
+Types of loaading API
+
+user loads the website  -->  Api call  --> render page..
+                            300ms to call api  200ms             so total 300 + 200 = 500ms
+
+user loads the page   -->  render the initial page (loading)  -->  api call  --> update UI
+                                100ms                               300ms          200ms         500ms
+
+2nd is ui bcoz the page is available very quickly
+
+The best part of React is its Reconcilation algorithm
+
+To make this functionality HAPPEN, React gives access to the 2nd most import hook : `useEffect()`
+
+# 3 Body.js
+
+  // useEffect() is a function that we'll call by passing another function (callback) to it. It will be called whenever useEffect wants it to be called.
+  // and React will make sure it will be called at specific time.
+  // What specific time?
+  // When ever my props changes or state changes my component will re-rendered, whenever it re-renders after every rerender this useEffect it called.
+  // But we dont want to call it after every re-render. So to make this happen pass an Empty dependency array.
+  // Suppose i want to call this useEffect when ever my searchText changes, then write searchText inside the dependency array. This means my useEffect is dependent on searchText
+
+  useEffect(() => {
+    console.log('call this when dependency is changes')
+  }, [searchText])
+
+  # 3.1
+    // useEffect() is a function that we'll call by passing another function (callback) to it. It will be called whenever useEffect wants it to be called.
+  // and React will make sure it will be called at specific time.
+  // What specific time?
+  // When ever my props changes or state changes my component will re-rendered, whenever it re-renders after every rerender this useEffect it called.
+  // But we dont want to call it after every re-render. So to make this happen pass an Empty dependency array.
+  // Suppose i want to call this useEffect when ever my searchText changes, then write searchText inside the dependency array. This means my useEffect is dependent on searchText
+  // Empty dependency array, It will call the useEffect after the render
+
+  // dep array [searchText] once after initial render + everytime after my render (searchText changes)
+  // So this useEffect is for API call. Api call should be called once after our render.
+
+  // useEffect will make my api call (after render) and it will re-render my component.
+
+  useEffect(() => {
+    // API call
+    getRestaurants()
+  }, [])
+
+  // the call happens aynchronously
+  async function getRestaurants() {
+    const data = await fetch(
+      'https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.310302&lng=78.518064&page_type=DESKTOP_WEB_LISTING',
+    )
+    const json = await data.json()
+    console.log(json)
+  }
+
+  # 4 Header.js login logout button 2:48:00
+
+  const authenticateUser = () => {
+  // API call to check authentication
+  return true
+}
+
+const Title = () => (
+  <a href="/">
+    <img
+      className="logo"
+      alt="logo"
+      src="https://yt3.ggpht.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj"
+    />
+  </a>
+)
+
+const Header = () => {
+  // Whenever we change the STATE VARIABLE React does a KIND of REFRESHES THE COMPONENT.
+  // the whole Component gets re-rendered when some is changed in a STATE VARIABLE.
+  console.log('render()')
+
+  return (
+    <div className="header">
+      <Title />
+
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+      {/*
+       * Here we can write JS
+       * But we cannot write statements..like  -- >  let a = 10;
+       *                                             console.log(a);
+       * Only expressions works here... converting above 2 statements into an expression
+       *  ((let a = 10),console.log(a)) Now this become one expression..
+       * So we can write anything in { ... } in jsx.
+       */}
+      <button>Login</button>
+      <button>Logout</button>
+    </div>
+  )
+}
+
+export default Header
+

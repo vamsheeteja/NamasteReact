@@ -93,15 +93,20 @@ Lecture 5
 
 +++++++++++++++++=================-------------------+++++++++++++++++++---
 
-team 
+Lecture - 6
 
+5:00 Config driven UI
 
+12:00 Hooks (Explained Again)
 
+44:00 Proper filetering (Restructing our restro code)
 
+53:50 Microservices Architecture
 
+1:08:11 Exploring the world
 
-
-
+1:18:59 Loading types of Api 
+ 
 
 
 

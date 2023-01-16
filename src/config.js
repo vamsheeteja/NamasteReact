@@ -4,7 +4,7 @@ export const IMG_CDN_URL =
 // js object
 export const restaurantList = [
   {
-    info: {
+    data: {
       id: '500530',
       name: 'BALAJI SANTOSH FAMILY DHABA',
       cloudinaryImageId: 'gei77risn3bvgabuozw7',
@@ -91,7 +91,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '17099',
       name: 'KFC',
       cloudinaryImageId: 'bdcd233971b7c81bf77e1fa4471280eb',
@@ -177,7 +177,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '651585',
       name: 'Sri Venkata Sai Swagruha Foods',
       cloudinaryImageId: '8951a6325821579f1c66917825dbbc8b',
@@ -260,7 +260,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '644865',
       name: 'Burger King',
       cloudinaryImageId: '49c2de336da7fe4e91345a622b7d7abd',
@@ -346,7 +346,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '32844',
       name: "McDonald's",
       cloudinaryImageId: '0e8f93a56b93e43d7627c2c21bc1106c',
@@ -447,7 +447,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '466949',
       name: "Domino's Pizza",
       cloudinaryImageId: 'rj9wq3zvjbzxo6wo2tdg',
@@ -524,7 +524,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '586834',
       name: 'Chinese Daily',
       cloudinaryImageId: 'mw7bwzyxiex4au904eh0',
@@ -613,7 +613,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '240789',
       name: 'Mehfil',
       cloudinaryImageId: 'uvvj5pcyhsgt29yldbvq',
@@ -702,7 +702,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '544888',
       name: 'Pizza Hut',
       cloudinaryImageId: 'l6fwhltsrup7sdfnugj9',
@@ -788,7 +788,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '7409',
       name: 'Paradise Biryani',
       cloudinaryImageId: 'crrat0jizxsrusegmxjb',
@@ -874,7 +874,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '19294',
       name: 'Sri Sampoorna Grand',
       cloudinaryImageId: 'hotloggujalocj9afsyo',
@@ -967,7 +967,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '179095',
       name: 'Subbayya Gari Hotel',
       cloudinaryImageId: 'wnln2kbetcoxacsj8kao',
@@ -1050,7 +1050,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '74238',
       name: 'Cream Stone Ice Cream',
       cloudinaryImageId: 'j6fn4rvyfmnulhln9aub',
@@ -1152,7 +1152,7 @@ export const restaurantList = [
     },
   },
   {
-    info: {
+    data: {
       id: '20347',
       name: 'Subway',
       cloudinaryImageId: 'jeps63oyzdjw07eowbdr',

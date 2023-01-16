@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const Title = () => (
   <a href="/">
     <img
@@ -9,9 +11,16 @@ const Title = () => (
 )
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // Whenever we change the STATE VARIABLE React does a KIND of REFRESHES THE COMPONENT.
+  // the whole Component gets re-rendered when some is changed in a STATE VARIABLE.
+  console.log('render()')
+
   return (
     <div className="header">
       <Title />
+
       <div className="nav-items">
         <ul>
           <li>Home</li>
@@ -20,8 +29,13 @@ const Header = () => {
           <li>Cart</li>
         </ul>
       </div>
+      {isLoggedIn ? (
+        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+      ) : (
+        <button onClick={() => setIsLoggedIn(true)}>Login</button>
+      )}
     </div>
   )
 }
 
-export default Header // We can just export default only one thing.
+export default Header

@@ -1,0 +1,128 @@
+Assignment - 6
+
+1. What is a Microservice?
+	- Microservice (from Microservices Architecture) is like a one single or small project (one part of project) in whole Project. 
+	- Generally in this architecture, The one big project is divided into small small projects like UI, Backend, authentication, and again in ui we have some 20 projects..like. One single small project is a microservice.
+
+2. What is Monilithic Architecture?
+	- A monolithic application is built as a single unified unit.
+	- The monolithic architecture is a Traditional model of a software 	program, which is built as a unified unit that is self-contained and independent from other applications.
+	
+	 A monolithic architecture is a singular, large computing network with one code base that couples all of the business concerns together.  To make a change to this sort of application requires updating the entire stack by accessing the code base and building and deploying an updated version of the service-side interface. This makes updates restrictive and time-consuming. 
+	 
+3. Difference between Monilithic and Microservice?
+	- A monolithic application Build as a single unified unit
+	whereas in Microservice architecture: is a Collection of smalled, independently deployable services. 
+
+	some of the advantages of microservices are
+	- independently deployable: since individual units they allow fast and easy independent deployment of individual features.
+	- Technology flexibilty
+	- Happier Teams
+	- Flexible scaling
+	- Highly maintainable and testable
+	
+	Disadv
+	- lack of standardization
+	- debugging challenge
+	- development sprawl
+
+4. Why do we need a useEffect hook?
+	- with useState() hook (the variable declared as React's state variables, any change occurs in the state (modify/ update state variable) then the whole component RE-RENDERS.
+	- If we want to place some code that has to be rendered (called only one or dependent on some event (some other state variable)) then that type of code can be placed in useEffect() hook.
+	
+	Best example is : if we want to fetch an api in our program (ie it should run only ONCE after the initial render) then, the best place to keep the fetch code is INSIDE useEffect() hook.
+
+5. What is optional chaining? 
+	- The Optional Chaining "?." operator accesses an object's property or calls a function. If the object accessed or function called is undefined or null, it returns undefined instead of throwing an error.
+	
+	Ex 
+	
+	const  user = {
+		name: "Rama",
+		address: {
+			city: "Hyderabad",
+		}
+	}
+	
+	const name = user.data.name;
+	console.log(name); // Instead of getting ERROR now we'll get undefined.
+	
+	6. What is shimmer UI?
+		- The shimmer effects are Loading indicators used when fetching data from a data source that can either be local or remote. 
+		- It paints a view that may be similar to the actul data to be rendered on the screen when the data is available.
+	
+	7. JS expression and JS statements
+		- JS expressions : At its core, an expression is a bit of js code that produces a value.
+		For example 
+			- 1 -> produces 1
+			- "hello" -> "hello"
+			- isHappy?😀:☹️;
+		
+		Expression can contain expressions 
+		
+		(5 + 1) * 2 
+		there are 5 expressions in this Expression.
+		
+		- JS statements: A js program is a sequence of statements. Each statement is an instruction for the computer to do something.
+	
+		let hi = 5;
+		if(hi > 10) {
+			// more statements here 
+		}
+		
+		etc.
+		
+8. What is conditional rendering. Explain with code example?
+	- Conditional Rendering in React works the same way as conditions work in js. 
+	Use js operators like `if` or the conditional operator to create elements representing the current state, and let React update the UI to match them.
+	
+	Example lets create a simple toggle button
+	
+	const DemoContainer = () => {
+		
+		// need a state variable
+		const [isLoggedIn, setIsLoggedIn] = useState(false);
+		
+		// Depending on the condition React will render the specific component
+		return (isLoggedIn)?
+		(
+			<button onClick = { () => setIsLoggedIn(false) }> Logout </button>
+		)
+		:
+		(
+			<button onClick = { () => setIsLoggedIn(true)} > Login </button>
+		)
+	
+	}
+	
+9. What is CORS?
+	Cross-Orgin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins(domain, scheme, or port) other than its own from which a browser should permit loading resources.
+	
+	watch Akshay yt video 
+	
+10. What is async and await?
+	In cut-short
+	A js Promise object can be.
+		- Pending
+		- Fulfulled
+		- Rejected
+		
+	- The Promise object supports two properties: state and result
+	
+	while a promise object is 'pending' (working), the result is undefined.
+	when a promise object is 'fulfulled', the result is a value.
+	when a promise object is 'rejected', the result is an error object.
+	
+	- async and await make promises easier to write
+	async makes a function return a promise
+	await makes a function wait for a promise
+	
+	the await keyword can only be used inside an async function.
+	the await keyword makes the function pause the execution and wait for a resolved promise before it continues
+	
+	Watch Akshay yt vids
+
+11. What is the use of 'const json = await data.json()' in getRestaurants()
+	- will wait for the data to be fetched from the cdn and once it is available, it will be assigned to the json variable.
+	
+	JAI HIND

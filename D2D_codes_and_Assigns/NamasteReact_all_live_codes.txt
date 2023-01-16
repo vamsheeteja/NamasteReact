@@ -847,7 +847,7 @@ const Body = () => {
          * When we create a varible using useState, React is WATCHING this variable, React is keeping a track of this variables.
          * When i click on `Search` button, my whole component GETS RE-RENDERED
          * that is WHENEVER THIS VARIABLES GETS UPDATED THE WHOLE COMPONENT GETS RE-RENDERED.
-         * ITS IS destroying the Body component and Re constructing the component again. It is happening very fast. RECONCILIATION IS HAPPENING.
+         * IT IS destroying the Body component and Re constructing the component again. It is happening very fast. RECONCILIATION IS HAPPENING.
          * It is doing a DIFF algorithm
          */}
         <button
