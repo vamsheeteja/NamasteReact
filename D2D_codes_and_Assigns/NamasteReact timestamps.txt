@@ -106,9 +106,48 @@ Lecture - 6
 1:08:11 Exploring the world
 
 1:18:59 Loading types of Api 
- 
 
 
++++++++==================+++++++++++++++++++++++
+
+Lecture 7 Finding the path
+
+24:00 we can not optimize images after it comes to our browser, So we put in optimized images on browser.
+
+27:30 Creating Shimmer
 
 
+30:00 - 35:30 (around) for every small things do not install npm packages. Install only if necessary. 
+Formik for input details validations.
 
+35:50 Actual Starting of Lecture 7 Finding the path (of different pages of our name) Routing.
+
+npm package: react-router-dom 
+
+42:16 Linking Page/ Routing 
+createBrowserRouter, RouterProvider
+
+
+1:12:00 useRouterError HOOK
+
+1:18:20 Problem with Anchor tag: If you click on it it just REFRESHES the WHOLE Page. BUT we are building a SINGLE PAGE APPLICATION
+
+1:19:30 SPA
+
+1:22:00 TYPES OF ROUTING
+client side : when changing routes all pages will come from the client itself (here it will not make any network call if click on any link). Bcoz all out COMPONENTS are already there in out code. We dont have to got to server.
+
+and 
+server side : when changing route all pages will come from server.
+
+So react-router-dom gives us `Link` 
+
+This Link tag developed by REMIX 
+
+This Link tag at EOD uses anchor tag behind the scenes. We use it bcoz the react-router-dom is doing some black magic. The react-router-dom is keeping track of the Link tag. Browser understand a tag so it is converted to a tag
+
+1:32:42 NESTED ROUTING (we want to keep header and footer intact even if we go to another pages)
+
+1:50:00 Adding RestaurantMenu
+
+2:22:00 Very IMPORTANT Optional Chaining and FIXING IT

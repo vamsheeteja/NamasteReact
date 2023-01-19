@@ -1,12 +1,10 @@
 import { useState } from 'react'
+import Logo from '../assets/img/foodvilla.png'
+import { Link } from 'react-router-dom'
 
 const Title = () => (
   <a href="/">
-    <img
-      className="logo"
-      alt="logo"
-      src="https://yt3.ggpht.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj"
-    />
+    <img className="logo" alt="logo" src={Logo} />
   </a>
 )
 
@@ -23,17 +21,33 @@ const Header = () => {
 
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Cart</li>
+          <li>
+            <Link to="/" className="link">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" className="link">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" className="link">
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link to="" className="link">
+              Cart
+            </Link>
+          </li>
         </ul>
       </div>
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? (
         <button onClick={() => setIsLoggedIn(false)}>Logout</button>
       ) : (
         <button onClick={() => setIsLoggedIn(true)}>Login</button>
-      )}
+      )} */}
     </div>
   )
 }
