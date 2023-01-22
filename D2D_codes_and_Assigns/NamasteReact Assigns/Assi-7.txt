@@ -1,0 +1,68 @@
+Assignment-7
+
+1. What are various ways to add images into our App? Explain with code examples?
+
+	- Using the url of the image for the CDN or any public images.
+	Eg. <img src="https://swiggy.com/logo-og.png" alt="Logo" />
+	
+	- Adding the image into the project and importing it from it into the desired component.
+	
+	Eg. import logo from "./assests/img/foodvillalogo.png"
+	
+	- Note: A good practice of adding images to your project is in the assets/img structure.
+	
+2. What would happen if we do console.log(useState())?
+	
+	- On console.log(useState()), we get an array [undefined, f()].
+	- The first element is the state variable. As we have not provided anything as initial values so it will be undefined.
+	- The function along with undefined which has a name bound setState. It will log [undefined, f()]
+	
+3. How will useEffect behave if we do not provide any dependenct array?
+
+	useEffect() behaves differently depending on the dependency array.
+	
+	CASE 1: Empty dependency array
+		useEffect(() -> {
+			// code 
+			
+		}, [])
+		
+		- This code runs only ONCE after the INITIAL render().
+		- We keep here the code which makes an api call.
+
+	CASE 2: State variable declared inside dependency array
+		useEffect(() => {
+			// code
+		},[restaurant])
+		
+		- This code runs whenever the state variable changes/modifes.
+		- Here in above example whenever the statevariable `restaurant` gets modified, then the useEffect will be called.
+	
+	CASE 3: No PROVIDED ANY DEPENDENCY ARRAY.
+		useEffect(() => {
+			// code
+		})
+		
+		- If no Dependency array is provided, then the useEffect will run Each time component renders ie, each time whenever there is a state change, component will re-render and hence useEffect will run.
+
+
+4. What is SPA?
+		In a Single Page Application, SPA the browser loads only one page or document, and then updates body content of that single document without loading a new page. This makes it so Fast in loading. The React Reconciliation engine on basis of diff algorithm compares the actual DOM with virtual DOM and add/update nodes to the actual dom which were added or updated without touching the other nodes. AMAZING :) 
+		
+5. What is difference between Client Side Routing and Server Side Routing?
+	- Server Side Routing: if we click on any links it will fetch a whole new document from the Server side. 
+	
+	- A server side request causes the whole page to refresh. 
+	
+	- This is because a new GET request is sent to server which responds with a new document, completely discarding the old page altogether.
+	
+	- Client Side Routing: if we click only any links here, the new page get loads from the client itself.
+	
+	- The request to server is PREVENTED here.
+	
+	- Here during the first load, the webapp is loaded from the sever to client, after which whenever there is a change in URL, (clicking on any link), the router library navigates the user to a new page without sending any request to backend. 
+	
+	- All Single Page Application uses client-side routing.
+
+
+		
