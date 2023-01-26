@@ -151,3 +151,10 @@ This Link tag at EOD uses anchor tag behind the scenes. We use it bcoz the react
 1:50:00 Adding RestaurantMenu
 
 2:22:00 Very IMPORTANT Optional Chaining and FIXING IT
+
+
+++======================_____================================
+
+Lecture -8
+
+TS

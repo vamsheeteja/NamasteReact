@@ -10,6 +10,8 @@ import About from './components/About.js'
 import Contact from './components/Contact.js'
 import Error from './components/Error.js'
 import RestaurantMenu from './components/RestaurantMenu.js'
+// import Profile from './components/Profile.js'
+import Profile from './components/ProfileClass.js'
 
 // Structure you layout
 const AppLayout = () => {
@@ -43,6 +45,14 @@ const appRouter = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
+        children: [
+          {
+            // "/profile" then react-router-dom will consider this as `localhost:1234/profile`. SO DONT WRITE /profile
+            // `/` slash means from the route
+            path: 'profile', // react-router-dom will convert this to `localhost:1234/parentpath/{path}`
+            element: <Profile />,
+          },
+        ],
       },
       {
         path: '/contact',

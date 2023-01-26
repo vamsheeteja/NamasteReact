@@ -450,3 +450,202 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 // now root will render according to the `appRouter` configuration
 // here router is a PROPs
 root.render(<RouterProvider router={appRouter} />) // rendering a react functional component
+
+** ONCE watch 6 and 7
+
+link tag from react-router-dom
+useParams to read url 
+createBrowserRouter - function to configure Routing
+RouterProvider - component that we used to provide router to our app.
+<Outlet> - children get injected.
+
+++++++++++======================================================================================
+
+Lecture 8; Let's get Classy..
+
+Class Based Components
+
+- The concepts of components started with class based components.
+- React initially started with CBCs
+
+19:00
+- Nested Route Children of children
+
+      {
+        path: '/about',
+        element: <About />,
+        children: [
+          {
+            // "/profile" then react-router-dom will consider this as `localhost:1234/profile`. SO DONT WRITE /profile
+            // `/` slash means from the route
+            path: 'profile', // react-router-dom will convert this to `localhost:1234/parentpath/{path}`
+            element: <Profile />,
+          },
+        ],
+      }
+
+Apps.js `after adding Class based component`
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import Header from './components/Header.js'
+import Body from './components/Body'
+import Footer from './components/Footer'
+// This `createBrowserRouter` function from react-router-dom which help us create ROUTING
+//Timestamp : 48:25 There is a component RouterProvider that helps in provinding appRouter to our APP.
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import About from './components/About.js'
+import Contact from './components/Contact.js'
+import Error from './components/Error.js'
+import RestaurantMenu from './components/RestaurantMenu.js'
+// import Profile from './components/Profile.js'
+import Profile from './components/ProfileClass.js'
+
+// Structure you layout
+const AppLayout = () => {
+  return (
+    <React.Fragment>
+      <Header />
+      {/* This is the Outlet where we have to FILL out Different pages here */}
+      {/* Outlet will be filled by Children components */}
+      {/* All the children will be going into outlet according to the ROUTE */}
+      <Outlet />
+      <Footer />
+    </React.Fragment>
+  )
+}
+
+// this is place we where give links to the /path.
+// Routing Configuration. This configuration is an ARRAY. it contains objects. List of paths and element..
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    // which has to be loaded on "/". <AppLayout /> must be defined FIRST (thats why placed after defining AppLayout)
+    element: <AppLayout />,
+    errorElement: <Error />,
+    // We can create children of route
+    children: [
+      // NOTE: we have to also pass a children for the BODY Component
+      {
+        path: '/',
+        element: <Body />,
+      },
+      {
+        path: '/about',
+        element: <About />,
+        children: [
+          {
+            // "/profile" then react-router-dom will consider this as `localhost:1234/profile`. SO DONT WRITE /profile
+            // `/` slash means from the route
+            path: 'profile', // react-router-dom will convert this to `localhost:1234/parentpath/{path}`
+            element: <Profile />,
+          },
+        ],
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
+      },
+      {
+        path: '/restaurant/:resId',
+        element: <RestaurantMenu />,
+      },
+    ],
+  },
+])
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+// now root will render according to the `appRouter` configuration
+// here router is a PROPs
+root.render(<RouterProvider router={appRouter} />) // rendering a react functional component
+
+Pofile.js
+
+const Profile = () => {
+  return (
+    <div>
+      <h1> Profile Component</h1>
+    </div>
+  )
+}
+
+export default Profile
+
+Profile.js equivalent class js file
+
+profileClass.js
+
+import React from 'react'
+
+class Profile extends React.Component {
+  // you CANNOT CREATE CBC WITHOUT render() method.
+  // this render() method returns some JSx.
+  render() {
+    return <h1> Profile Class Component</h1>
+  }
+}
+
+export default Profile
+
+TS: 40:00
+#1
+Passing arguments in Class Based arguments
+-- Access the props in CBCs by using the `this.props`
+
+TS: 47:30
+#2 Changing States in CBCs
+
+Profile.js
+import { useState } from 'react'
+
+const Profile = (props) => {
+  const [count] = useState(0)
+  return (
+    <div>
+      <h2> Profile Component</h2>
+      <h3> Name: {props.name}</h3>
+      <h3> Count: {count} </h3>
+    </div>
+  )
+}
+
+export default Profile
+---------------------------
+ProfileClass.js
+import React from 'react'
+
+class Profile extends React.Component {
+  // Always whenever we are creating a CBC we have to get our props into constructor and do a super(props) . WHY? Search..
+  // constructor is a place that is used for initialization
+  // whenever a New Instance of class is created.. whenever this component is rendered.. a constructor is CALLED.. AND THIS IS THE BEST PLACE TO CREATE OUT STATE VARIABLES.
+  constructor(props) {
+    super(props)
+    // Create State. React gives Acess to this.state
+    this.state = {
+      count: 0,
+    }
+  }
+  render() {
+    // DE-Structuring
+    const { count } = this.state
+
+    return (
+      <div>
+        <h1> Profile Class Component</h1>
+        {/* We'll get props here by using this.props */}
+        <h2> Name: {this.props.name}</h2>
+        <h3> Count: {count} </h3>
+      </div>
+    )
+  }
+}
+
+export default Profile
+
+
+TS: 1:00:00
+
+#3 setCount in CBCs
+
+continue in new files..

@@ -1,0 +1,405 @@
+TS: 1:00:00
+
+#3 setCount in CBCs
+
+profile.js (Functional Component)
+
+import { useState } from 'react'
+
+const Profile = (props) => {
+  const [count, setCount] = useState(0)
+  const [count2, setCount2] = useState(0)
+
+  return (
+    <div>
+      <h2> Profile Component</h2>
+      <h3> Name: {props.name}</h3>
+      <h3> Count: {count} </h3>
+      <button
+        onClick={() => {
+          setCount(1)
+          setCount2(1)
+        }}
+      >
+        Count
+      </button>
+    </div>
+  )
+}
+
+export default Profile
+
+ProfileClass.js file. (equivalent Class Component file)
+
+import React from 'react'
+
+class Profile extends React.Component {
+  // Always whenever we are creating a CBC we have to get our props into constructor and do a super(props) . WHY? Search..
+  // constructor is a place that is used for initialization
+  // whenever a New Instance of class is created.. whenever this component is rendered.. a constructor is CALLED.. AND THIS IS THE BEST PLACE TO CREATE OUT STATE VARIABLES.
+  constructor(props) {
+    super(props)
+    // Create State. React gives Acess to this.state
+
+    this.state = {
+      count: 0,
+      // React uses ONE (BIG) Object to maintain all state variables. Even in Functional Components BTS
+      count2: 0,
+    }
+  }
+  render() {
+    // DE-Structuring
+    const { count } = this.state
+
+    return (
+      <div>
+        <h1> Profile Class Component</h1>
+        {/* We'll get props here by using this.props */}
+        <h2> Name: {this.props.name}</h2>
+        <h3> Count: {count} </h3>
+        {/* we use `setCount` bcoz React TRACKS it.. It uses it to trigger the Reconciliation Process.. to keep the UI in sync with state variable.. ie whenever out state variables changes it UPDATES the UI  */}
+        {/* WE DONOT MUTATE STATE DIRECTLY */}
+        <button
+          onClick={() => {
+            // we should not use this.state.count = 1
+            // we donot MUTATE state DIRECTLY
+            // this.setState(`pass the modified OBJECTS`)
+            this.setState({
+              count: 1,
+              count2: 1,
+            })
+          }}
+        >
+          setCount
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Profile
+
+TS: 1:11:00 
+IN what sequence the code gets executed
+#4 React Life Cycle
+
+- Every Class has a life cycle.
+- when we go into life cycle 
+
+first a constructor is CALLED
+then component is render
+
+1) constructor
+2) render
+
+TS: 1:14:00 
+- How to use `useEffect` in CBCc.
+
+Remember the LifeCycle of the COMPONENT RUNS
+
+
+1. first the `Constructor` is called
+2. then tje component is  render'ed
+3. then the `componentDidMount` method is called
+
+#5
+So now what is best place to call the API in a CBC
+ANS: componentDidMount
+
+import React from 'react'
+
+class Profile extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 0,
+    }
+    console.log('Child - Constructor')
+  }
+
+  componentDidMount() {
+    // BEST PLACE for API CALLS
+    // this will be called AFTER render
+    console.log('Child - ComponentDidMount')
+  }
+
+  render() {
+    // DE-Structuring
+    const { count } = this.state
+    console.log('Child - render')
+    return (
+      <div>
+        <h1> Profile Class Component</h1>
+        <h2> Name: {this.props.name}</h2>
+        <h3> Count: {count} </h3>
+        <button
+          onClick={() => {
+            this.setState({
+              count: 1,
+            })
+          }}
+        >
+          setCount
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Profile
+
+
+-----------
+
+TS: 1:34:00
+#6 Amazing interview like question. Seq of execution
+
+About.js and its child ProfileClass.js
+
+console------------
+
+
+
+TS: 1:41:00 with 1 child
+
+1 Parent - Constructor
+2 Parent - render
+3 Child - Constructor
+4 Child - render
+5 Child - componentDidMount
+6 Parent - componentDidMount
+
+
+VERY IMPORTANT CONCEPT CLASS LifeCycle
+
+TS: 1:43:17
+with two children
+
+1 Parent - Constructor
+2 Parent - render
+    3 constructor 1st child
+    4 render 1st child
+(O.O) observe here... REMEMBER componentDidMount will be called AFTER INITIAL/DEFAULT RENDER.
+`React `
+(O.O) TS: 1:58:00 for clear understading
+     now we call componentDidMount - 1st Child 
+     it will make an API call and 2nd child will stay. so it will batch up the render phase for the 1st and 2nd child.
+    5 constructor 2nd child
+    6 render 2nd child    
+        // RENDER PHASE FINISHED
+
+    --- DOM UPDATED FOR CHILDREN ---- 
+
+   // COMMIT PHASE STARTED     
+    7 componentDidMount 1st child
+    8 componentDidMount 2nd child
+9 Parent - componentDidMount  
+
+with Class based components 
+ it was very confusing 
+ what is rendering when 
+ what life cycle methods are going where 
+
+ when React is rendering things up 
+ it does it in 2 phases
+
+1) render phase
+2) commit phase
+
+- render phase includes 
+    constructor
+    render method
+- commit phase is the place where React actually modifies the DOM
+    componentDidMount is called after the render ie react actually updates the DOM
+
+    commit phase is slow as it needs to update the DOM
+    so react BATCHES UP THINGS INSIDE render phase for the children
+
+
+TS: 2:20:30 -- (`--` means go backwards)
+/*
+* Parent cons
+* Parent render
+* child const
+* child render
+* (O.O) OBSERVER parent - componentDidMount -- it is called before making an API call 
+why? bcoz React finisheds render cycles first then it goes to the commit cycles. 
+initially react will render things for us and children componentDidMount will be called later because we are using async and it will take some time to data to load. so that is why it is calling in this sequence.
+PLEASE THINK AGAIN go thorough it . 
+*
+* DOM is updated
+* json is logged in console.
+* child componentDidMount
+* child render
+
+*/
+
+In the prev (not the above, before above) there was no DATA LOAD (API CALL) in the componentDidMount({.. }) so they got printed before the `parent componentDidMount`
+
+    but in the next (above) there was an API call.. so `parent componentDidMount` got printed before the `child componentDidMount`
+
+----- TS: 2:34:35 
+COMPLETE REACT COMPONENT LifeCycle
+
+import React from 'react'
+
+class Profile extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userInfo: {
+        name: 'Dummy Name',
+        location: 'Dummy Location',
+      },
+    }
+    console.log('Child - Constructor ' + this.props.name)
+  }
+
+  // componentDidMount() will be called after the first render
+  async componentDidMount() {
+    console.log('inside componentDidMount Loading data')
+    const data = await fetch('https://api.github.com/users/vamsheeteja')
+    const json = await data.json()
+    console.log(json)
+
+    // after API call we are setState it will RE-RENDER/ UPDATING START . triggers Reconciliation
+    this.setState({
+      userInfo: json,
+    })
+
+    // Search hw.
+    // We can write async componentDidMount()..here
+    // But we cannot make useEffect() async.. WHY?
+
+    console.log('Child - ComponentDidMount ' + this.props.name)
+  }
+
+  // componentDidUpdate() will be called after every render
+  componentDidUpdate() {
+    console.log('Component Did update')
+  }
+
+  // componentWillUnmount will be called before this component will unmount(go) from the DOM ie if we go to another page.
+  componentWillUnmount() {
+    console.log('Compent will unmount')
+  }
+
+  render() {
+    // DE-Structuring
+    const { avatar_url, name, location } = this?.state?.userInfo
+    console.log('Child - render ' + this.props.name)
+
+    return (
+      <div>
+        <h1> Profile Class Component</h1>
+        <img src={avatar_url} />
+        <h2> Name: {name}</h2>
+        <h3> Location: {location} </h3>
+      </div>
+    )
+  }
+}
+
+/*
+* Parent cons
+* Parent render
+* child const
+* child render
+* (O.O) OBSERVER parent - componentDidMount -- it is called before making an API call 
+why? bcoz React finisheds render cycles first then it goes to the commit cycles. 
+initially react will render things for us and children componentDidMount will be called later because we are using async and it will take some time to data to load. so that is why it is calling in this sequence.
+PLEASE THINK AGAIN go thorough it . 
+*
+* DOM is updated
+* json is logged in console.
+* child componentDidMount
+* child render
+* componentDidUpdate
+
+*/
+
+export default Profile
+
+
+async componentDidMount() {
+    console.log('inside componentDidMount Loading data')
+    const data = await fetch('https://api.github.com/users/vamsheeteja')
+    const json = await data.json()
+    console.log(json)
+
+    // after API call we are setState it will RE-RENDER/ UPDATING START . triggers Reconciliation
+    this.setState({
+      userInfo: json,
+    })
+
+    // Search hw.
+    // We can write async componentDidMount()..here
+    // But we cannot make useEffect() async.. WHY?
+
+    console.log('Child - ComponentDidMount ' + this.props.name)
+  }
+
+====================================
+
+1) NEVER-EVER COMPARE REACT'S LIFECYCLE TO FUNCTIONAL COMPONENTS
+-- USEeffect is not using componentDidMount bts. It is completely differenvt
+
+
+import React from 'react'
+
+class Profile extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userInfo: {
+        name: 'Dummy Name',
+        location: 'Dummy Location',
+      },
+    }
+    console.log('Child - Constructor ' + this.props.name)
+  }
+
+  // single page application also do have cons init
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      console.log('Namaste React OP')
+    }, 1000)
+    // (O.O) when we move on to another component the interval again start..
+    // like called 2nt time interval will be twice 1 3 5.. called 3rd time thrice 1 4 7 10 ...
+    // SPA was most powerful but this is a Bad thing
+    // this is bcoz we are not Reloading the page,
+    // Performance loss is happening..
+    // to CLEAR this setInterval using componentUnmount
+
+    console.log('Component did mount')
+  }
+
+  // componentDidUpdate() will be called after every render
+  componentDidUpdate() {
+    console.log('Component Did update')
+  }
+
+  // componentWillUnmount will be called before this component will unmount(go) from the DOM ie if we go to another page.
+  componentWillUnmount() {
+    clearInterval(this.timer)
+    console.log('CompentWillUnmount')
+  }
+
+  render() {
+    // DE-Structuring
+    const { avatar_url, name, location } = this?.state?.userInfo
+    console.log('Child - render ' + this.props.name)
+
+    return (
+      <div>
+        <h1> Profile Class Component</h1>
+        <img src={avatar_url} />
+        <h2> Name: {name}</h2>
+        <h3> Location: {location} </h3>
+      </div>
+    )
+  }
+}
+
+export default Profile
+

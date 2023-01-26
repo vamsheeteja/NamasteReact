@@ -1,0 +1,140 @@
+Assingment-8
+
+1. How to you create Nested Routes react-router-dom configuration?
+	By adding children element to child.
+
+		for example if we have 
+		parent / home page > its child About 
+		now to about we have profile component
+		
+		code will be
+		
+		const appRouter = createBrowserRouter([
+			{
+				path: '/',
+				element: <HomePageComponent />,
+				errorElement: <Error />,
+				children: [
+					{
+						path: '/about', or also 'about'
+						element: <AboutComponent />,
+						children: [
+							{
+								path: 'profile',
+								element: <ProfileComponent />
+							}
+							
+						]
+					}
+				
+				]
+			}
+		]);
+		
+2. -- 
+
+3. What is the order of life cycle method calls in Class Based Components
+	 
+	The are two phase in which React render a component
+	1. render phase and 2. commit phase
+	
+	render phase -> constructor is called
+							 render method
+	commit phase -> commit phase is the place where react actually updates the dom 
+							componentDidMount is called after the render and react actually updates the dom.
+	
+	so the sequence is 
+	
+	1 - constructor 
+	2 - render
+	3 - componentDidMount - will be called after the first render
+	4 - componentDidUpdate - when ever state is changes this will be called. ie after every render..
+	5 - componentWillUnmount - will be called just before the component is unloaded.
+	
+	4. why do we use componentDidMount ?
+		when ever we want to make any network request or API calls ie loading data from the internet.. this we can write that code in componentDidMount().
+		
+		Because we dont want our react application to wait for the data to come and load instead we want to render the initial render ie with default data.
+		
+		So the componentDidMount() method allows us to execute the React code when the component is already placed in the DOM. 
+		
+		This is method is called during the Mounting phase of the React Life cycle ie after the component is rendered.
+
+5. why do we use componentWillUnmount? Show with Example?
+
+	Good question 
+	This is a small part that is upto some extent related to Scalable designing applications.
+	
+	- componentWillUnmount() is invoked immediately before a component is unmounter and destroyed.
+	- This is very useful/ we perform necessary CLEANUP operations here in this functions 
+	
+	- like invalidating timer, cancel network requests or any subscriptions that were created.
+	
+	example
+	
+		So for an example if we have a setInterval in our application.
+		
+		componentDidMount() {
+			this.timer = setInterval( () => {
+				console.log("THIS COMMENT IDENTIFIES THE PROBLEM WITH THIS CODE");
+			}, 1000)
+		}
+		
+		this componentDidMount() will be called after the initial render.
+		- Now the timer starts and print onto the console.
+		Now comes the problem
+		- Now when i click on another page that is unmounted (another component), the Reconciliation is triggered and my UI is updated.. but if we watch the console.. the setInterval again start and this time it increments by twice (slight fast)
+		- if i agiain click on another component this time thrice fast .......Soo whats happening here loll...why it is still Running...
+		
+		so that why we will clean this type of code in componentWillUnmount() method.
+		
+		eg.
+		
+		componentWillUnmount() {
+			clearInterval(this.timer)
+		}
+		
+		if we have use setInterval in a HOOK eg useEffect() 
+		then we'll use `return` method to clearInterval.
+		
+		useEffect({
+			const timer = setInterval( () => {
+				console.log("Namastey React OP");
+			}, 1000)
+			
+			return () => {
+				clearInterval(timer);
+			}
+		})
+		
+6. Why do we use super(props) in constructor?
+	only one reason to pass props in super() is 
+	when you want to `access this.props in constructor`.
+	
+	class MyComponent extends React.Component {
+		constructor(props) {
+			super(props)
+			
+			console.log(this.props)
+			// op -> {a: 'home'...}
+		}	
+	}
+	
+	
+	class MyComponent extends React.Component {
+		constructor(props) {
+			super()
+			
+			console.log(this.props)
+			// Undefined
+		}	
+	}
+	
+	Note: that passing or not passing props to super has not effect on later uses of this.props OUTSIDE constuctor. That is render, etc
+	
+	But the doc says 
+	class components should always call the base constructors with props.
+	
+7. Why cant we have the callback function of useEffect async?
+
+have to do..

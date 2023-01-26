@@ -13,7 +13,7 @@ const Header = () => {
 
   // Whenever we change the STATE VARIABLE React does a KIND of REFRESHES THE COMPONENT.
   // the whole Component gets re-rendered when some is changed in a STATE VARIABLE.
-  console.log('render()')
+  // console.log('render()')
 
   return (
     <div className="header">
