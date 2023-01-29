@@ -403,3 +403,270 @@ class Profile extends React.Component {
 
 export default Profile
 
+-----------------=====================-----------------
+
+Lecture - 9 Optimizing our App1
+
+L-8 Recap
+
+16:20 Batching : Render phase was being batch
+
+3 things 
+Mounting
+Updating 
+Unmounting
+
+every time we load a component 
+the first time the component is mounted..
+
+if the component does not have state 
+update will happen 0 time ie there will be 0 update 
+no states, no props, no update
+
+IMPORTANT
+// O>O create a nested child parent relationship and try to do console.log and see how lifecycle methods work.
+
+componentWillUnmount() used for clean up operations..
+
+-------------------Todays class
+
+HOOKs used till now
+useState()  from React
+useEffect() from React
+useParams() form react-router-dom
+
+Building Custom Hooks.
+
+why do we even build Hooks ?
+  Readability
+  Reusability
+  Seperation of Concern (Maintainability)
+
+  we can wrap up a small logic into a function and use it anywhere in the code.
+
+created a new foder src/utils
+create a new file helper.js
+
+Readable: we need to abstract the LOGIC. It makes our code much more Readable.
+Reusable: if we want to apply the same logic again some where in later
+  - There should be a COMMON place where we can store our Utility functions and later import and use them.
+  - A best practice in industry is to use a `src/utils` 
+
+Testable: Bcoz i can write separate test case for my function. I can test that function individually.
+Maintainable: It is easy to Debug.
+
+Hooks are kind of used for the same reason as at the EOD there are also functions
+
+Modularity ?
+we have broken down code into meaningful pieces.
+we have made a separate file for shimmer logic.
+
+Creating custom hook..
+
+In file RestaurantMenu.js
+the RestaurantMenu component is doing 2 things..
+
+  1 it is fetching data 
+  2 it is displaying data
+
+  can we extract some more logic from this component ? Yes the API call
+
+  the RestaurantMenu component is trying to 
+  1 get the restaurant info. id
+  2 get the details from the server of that restaurant
+  3 display 
+
+  so lets create a helper hook that will help us get the restaurant details.
+
+  IMP thing NOTE: when ever you are creating a hook, create it using a new file. 
+  create a HOOK using `use` prefix it is a React way of designing HOOK
+
+  # TS: 37:00 creating CUSTOM HOOKs
+
+  45:00 - 50:00
+
+How is Hook differently working as Compared to a functional component ?
+  It is function that return a JSX
+Hook does not need to return some JSX. It is a piece of JS code that extracts some Logic out of it.
+
+It will return some value, js, Object
+
+useState return some array
+useParams return some value.
+useEffect returh some idk. it is not used in such a way.
+
+IMP TS: how that render stuff is will work .. 
+TS: 53:00 VERY IMPORTANT STUFF the hook is having its own Reconciliation algorithm going on.
+
+==== HW.. extract the fetch logic from body.js ==================
+
+-- Developing a new Feature using HOOKS.
+
+
+if user is offline say you are offline.. restrict the user to click on any of navbar items
+
+#1:03:00
+isOnline feature
+
+js eventlistner `windowOnline` tracks status 
+
+Q. Why do we make a HOOK? what exactly is a HOOK different from a normal JS function?
+  In normal JS function:
+  - we cant define state variables
+  - the react reconcile algorithm will not trigger 
+  - no useEffect() 
+
+-- created new file in utils `useOnline` HOOK
+
+Body.js ----
+
+import { useEffect, useState } from 'react'
+
+const useOnline = () => {
+  // i want to change my status of online should automatically change.. so i will use a STATE variable for it to maintain the state
+  const [isOnline, setIsOnline] = useState(true)
+
+  // run the (set the) eventListener just ONCE, when ever my page loads, my eventListener should be tracked once. ie by using useEffect with empty dependency array
+
+  useEffect(() => {
+    // write a logic to keep on updating my online status whenever user go offline and go online.
+
+    const handleOnline = window.addEventListener('online', () => {
+      setIsOnline(true)
+    })
+    const handleOffline = window.addEventListener('offline', () => {
+      setIsOnline(false)
+    })
+
+    return () => {
+      // whenever i have to remove an event listener i have to pass in the SAME function that i have created
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+
+  // a Senior Dev code
+  // we have to clean the cache. Whenever we add a event listener we need to clean up the eventListener.
+  // wheneever we go offline and coming online..
+  // TS 1:29:00
+  // when we go to about us page the eventlistener is still there. but we need the event listener only when we are on the body page.
+  // So good practice to clear the mess that we are creating
+
+  // it return the status (boolean)
+  return isOnline
+}
+
+export default useOnline
+
+------------------------------------------------------
+#1:50:00
+
+Parcel is the beast 
+job of bundler minification, treeshaking, optimizations, hmr
+
+basic job = bundling things
+
+it should bundle our code.
+
+parcel produces ONE js file for our whole project all code and components.. it creates ONE js file
+
+when you make a BIG application there might be hundredss of components....
+if you Bundle them all in one js file when it would be whole Humangouss HUGEEE....bundled file..
+
+if the budled file is that so Humangous then it would just blast .. make our app very slow..
+
+Large Scale production Ready applications 
+  - they cannot work / created by just one Bubdle..
+  - solution is we should do 
+  
+      CHUNKING or 
+      CODE SPLITTING or 
+      DYNAMIC BUNDLING or 
+      LAZY LOADING.
+
+- Bundling is good upto some level.
+- Few lines of code will optimize our application to next level..🔥🔥
+
+How would WE split it ?
+  Make bundle size smaller but keep it logical. 
+
+
+Q) system desing interview : how will you build a website like makemytrip ?
+
+  When i will we using webpack or parcel (bundling)
+  - i will make sure that i will be using code splitting everywhere..
+  - i will make sure that my bundle does not include random code..
+  - logical bundling..
+
+It does not make sense of loading all the components at the homes page 
+
+i will LOAD specific (clicked) component at the runtime or when it is clicked and should RENDER it.
+  this is also known as
+                  - ON DEMAND LOADING
+                  - DYNAMIC IMPORT
+  
+____________________________________________________________________________
+  TS: 2:24:00 we are getting error component just before dynamic loading. 
+  ---------------------------------------------------------------------------
+
+  -- we are getting that error bcoz lazy loading takes a fraction of seconds to load the component into our page. 
+  and react kind of tries to RENDER the component which is yet to be loaded ... 
+  so it will susupend the operation..
+
+  on the second time click it is coming as it is now loaded into out SPA ....
+
+  TS: 2:30:43 suspense   
+      App.js
+      {
+        path: '/instamart',
+        element: (
+          <Suspense>
+            <Instamart />
+          </Suspense>
+        ),
+      },
+ 
+  Now after adding <Suspense> we will not get the error page.
+  now it loads well
+
+  when we write <Suspense>, React takes care of these components in a different Fashion.
+  Now React will know that those components will be Lazy loaded, dynamically loaded.
+  So React waits for the promise to resolve.
+
+  lazy(() => import...) import is a promise
+
+  <Suspense fallback={} >
+
+  fallback is props that you pass what should be displayed until the component(instamart) is loaded.
+
+
+
+  Lec-9 Recap
+
+  - created our own Hooks
+    useFetch()
+    useOnline()
+
+    Chunking/ Bundle Splitting/ On Demand Loading
+
+  - lazy()
+    <Suspense fallback={} >
+         ...
+
+    </Suspense>
+
+
+Never ever try to Dynamically Load a component inside another component. (be clear)
+  beacause it will be lazy loaded after every render.
+
+  DO lazy LOAD immediately following the import statements
+
+  _______________________________LECTURE-9 END___________________________________
+
+
+Things to be done after chapter-09 which i havent done
+
+create some hooks
+extract logic from body.js
+
+revise namaste js.

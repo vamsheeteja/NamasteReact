@@ -13,9 +13,9 @@ const Error = () => {
       />
       <h1>Opps!</h1>
       <h2>Something Went Wrong. Please try again later.</h2>
-      <h3>Status: {err.status} </h3>
-      <h3>Status Text: {err.statusText} </h3>
-      <h3>Error: {err.error.message} </h3>
+      <h3>Status: {err?.status} </h3>
+      <h3>Status Text: {err?.statusText} </h3>
+      <h3>Error: {err?.error?.message} </h3>
     </div>
   )
 }

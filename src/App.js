@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import Header from './components/Header.js'
 import Body from './components/Body'
@@ -6,12 +6,22 @@ import Footer from './components/Footer'
 // This `createBrowserRouter` function from react-router-dom which help us create ROUTING
 //Timestamp : 48:25 There is a component RouterProvider that helps in provinding appRouter to our APP.
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
-import About from './components/About.js'
+// import About from './components/About.js' // commented in L-9 for case of lazy loading
 import Contact from './components/Contact.js'
 import Error from './components/Error.js'
 import RestaurantMenu from './components/RestaurantMenu.js'
 // import Profile from './components/Profile.js'
 import Profile from './components/ProfileClass.js'
+import Shimmer from './components/Shimmer.js'
+// import Instamart from './components/Instamart.js' // we gonna do LAZY LOAD This
+
+// lazy comes from react
+// this is different import
+const Instamart = lazy(() => import('./components/Instamart')) // it like a Dynamic Import
+// Upon on Demand Loading -> upon render -> suspend loading
+
+// for practice case writing my About component in Lazy loading..
+const About = lazy(() => import('./components/About'))
 
 // Structure you layout
 const AppLayout = () => {
@@ -44,7 +54,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: '/about',
-        element: <About />,
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <About />
+          </Suspense>
+        ),
         children: [
           {
             // "/profile" then react-router-dom will consider this as `localhost:1234/profile`. SO DONT WRITE /profile
@@ -61,6 +75,14 @@ const appRouter = createBrowserRouter([
       {
         path: '/restaurant/:resId',
         element: <RestaurantMenu />,
+      },
+      {
+        path: '/instamart',
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Instamart />
+          </Suspense>
+        ),
       },
     ],
   },

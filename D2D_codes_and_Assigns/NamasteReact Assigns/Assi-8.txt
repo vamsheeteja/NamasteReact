@@ -138,3 +138,12 @@ Assingment-8
 7. Why cant we have the callback function of useEffect async?
 
 have to do..
+
+
+
+Things to be done after chapter-09 which i havent done
+
+create some hooks
+extract logic from body.js
+
+revise namaste js.

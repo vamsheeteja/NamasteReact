@@ -3,14 +3,8 @@ import { restaurantList } from '../config'
 import { useState, useEffect } from 'react'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router-dom'
-
-function filterData(searchText, restaurants) {
-  const filterData = restaurants.filter((restaurant) =>
-    restaurant?.data?.name.toLowerCase().includes(searchText.toLowerCase()),
-  )
-  return filterData
-}
-
+import { filterData } from '../utils/helper'
+import useOnline from '../utils/useOnline'
 const Body = () => {
   // at any given point of time : i want all my restaurants or filetered restaurants
   // whenever we are filtering we have to filter from all restaurants
@@ -29,10 +23,22 @@ const Body = () => {
       'https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.310302&lng=78.518064&page_type=DESKTOP_WEB_LISTING',
     )
     const json = await data.json()
-    console.log(json)
+    // console.log(json)
     // We have to use Optional chaining.
     setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards)
     setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+    // console.log(setAllRestaurants)
+  }
+
+  const isOnline = useOnline()
+  if (!isOnline) {
+    return (
+      <h1>
+        {' '}
+        ⛔Looks like you are Offline, Check you Internet Connection and try
+        Again
+      </h1>
+    )
   }
 
   // Conditional Rendering

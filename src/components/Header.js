@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Logo from '../assets/img/foodvilla.png'
 import { Link } from 'react-router-dom'
+import useOnline from '../utils/useOnline'
 
 const Title = () => (
   <a href="/">
@@ -14,6 +15,8 @@ const Header = () => {
   // Whenever we change the STATE VARIABLE React does a KIND of REFRESHES THE COMPONENT.
   // the whole Component gets re-rendered when some is changed in a STATE VARIABLE.
   // console.log('render()')
+
+  const isOnline = useOnline()
 
   return (
     <div className="header">
@@ -41,8 +44,14 @@ const Header = () => {
               Cart
             </Link>
           </li>
+          <li>
+            <Link to="/instamart" className="link">
+              Instamart
+            </Link>
+          </li>
         </ul>
       </div>
+      <h1>{isOnline ? '✅' : '⛔'}</h1>
       {/* {isLoggedIn ? (
         <button onClick={() => setIsLoggedIn(false)}>Logout</button>
       ) : (
