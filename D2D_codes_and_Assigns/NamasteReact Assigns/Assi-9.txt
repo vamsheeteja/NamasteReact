@@ -1,0 +1,38 @@
+Assi - 9 
+
+1. When and why do we need lazy() ?
+	- lazy() is provided by React to establish the functionality of DYNAMIC LOADING (also LAZY LOADING or CHUNKING or DYNAMIC BUNDLING or CODE SPLITTING or ON DEMAND LOADING).
+	- The Syntax is as follows
+		Suppose if we want to load a component named Jones.js
+			we'll lazy load it by 
+				const Jones = lazy(()=> import('./components/Jones.js'))
+	- This will Load the component Jones when user will click on it. Initially it will not be loaded into our SPA.
+	- Thus reduces the Bundle size and thus impact on the overall performance of our webapp.
+
+2. What is suspense ?
+	- Now, As explained above the lazy() function will load the defined component when being clicked. Now once the component is clicked on the UI, React tries to render that component which is not YET loaded on our SPA. Thus we get an Error. But after a second it will start working. So to avoid that error we use <Suspense> from React.
+	- With Suspense we're telling React to understand that this is a lazy() component. 
+	- Suspense has prop called `fallback`. This is used to display a load effect (our custom one eg a shimmer loading) until the lazy component gets loaded into the SPA and get render.
+
+3. Pros and Cons of using Code splitting formats.
+	Pros :
+			- performance of app increases
+			- bundle size decreases
+			- less traffic load for the host
+	Cons: 
+			- User experience may be affected. 
+				Backtracking may not be possible if the page stucture is not optimal.
+			- Additional code when integrating with js.
+			- External libraries may be required.
+			- js integratiion requires that users have scripts enabled.
+			
+		So if you app is big and the bundle size is Humongous then you can opt for On Demand Loading.
+
+	
+ ___________________________________________________
+Things to be done after chapter-09 which i havent done
+
+create some hooks
+extract logic from body.js
+
+revise namaste js.
