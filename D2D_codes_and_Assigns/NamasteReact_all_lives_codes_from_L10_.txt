@@ -1,0 +1,173 @@
+Lecture-09 Jo diktha hai vo bikta hai
+
+Why do we use Frameworks for css in our project ? 
+    optimized css
+    it saves time
+    faster development using css libraries and frameworks
+
+Overall prospective of How we can style our React Application.
+ 
+Different ways of using css
+    1. Css native (Extenal CSS). We switch bw two files .. css file and class name (some what tedios)
+    
+    2. SCSS and SASS makes the css wrinting experience good.
+        Adv of Scss over normal css
+            - nesting, resusablity, variables.
+            - It gives super power to our css
+            - differenct way of writing css.
+            - at the EOD that scss is converted to basic css
+
+    3. Inline css (rookie)
+        
+        const searchBtnCss = {
+            backgroundColor: "red";
+        }
+        
+        <button style={searchBtnCss} onClick=...> Click </Button>
+
+        or direclty Passing JS object into Curly braces..
+
+        <button style={{
+            backgroundColor: "red";
+        }} onClick=...> Click </Button>
+
+        This is a faster way of writing CSS. Tailwind also works like this.
+        THis is not a good way of writing css..
+        bcoz
+            Cant Reusability 
+            Hardcoded
+            Difficult to maintain
+            Repetetion
+            Heavy Job for Browsers., Processing the inline css
+            Avoid inline css
+            use only for immediate testing
+    
+    4. use libraries like material UI, Base UI, Ant UI, Chakra, Bootstrap
+        whenever we are building webapps we have common things on our page.
+        we always have a 
+            button, navbar, cards, list, menus, switched, calender, etc..
+
+        pros of using lib/frameworks 
+            easy to use
+            reusability
+            saves lot of time
+            CONSISTENT UI ////
+
+        problem with this is 
+            bundle size heavy
+            loose a lot of control of design
+                no customisation / flexibility
+                we are forced to their prepared pre built components.
+  
+IMPO: 
+When you are going to System Desing interview?
+You should tell what are you going to use for styling your Components.
+There are different ways to design you webapp, what will you choose, and give a good reason.
+
+SO do know pros and Cons 
+
+As a Sr Engir. you have to know pros and cons of all of the above styles.
+
+Design Plays a vital Role ...
+
+    5. Styled Component (more popularly used in React component)
+
+        html like syntax into js
+        now css like syntax into js this made birth of Styled component
+
+        - pain
+            it comes with a learning curve. its a different way of writing code
+
+    6. Tailwind CSS Framework
+        open source css framework
+    
+    Major Pros of inline css : it was saving time, fast, we write css on the go (in the same file.)
+
+    Tailwind css can be written on the go.. in the same file..
+    pros of tailwind css 
+        - Reusability 
+        - lot of prebuilt classes
+        - LESS BUNDLE SIZE: onlty the classes which we have used are included in the production code.
+        - Very Flexible UI: very much Customizable.
+
+        `Tailwind css OVERWRITES the default html tags normal behaviors`
+        Default CSS is removed.
+
+        - Everything in Tailwind works with ClassNames.
+
+        - postcss is a tool for transforming CSS with JS.
+
+    - Postcssrs configuration..
+    -postcssrc file to tell the bundler while youre bundling things up / building a dev or prod build we'll be using a tailwind so compile our tailwind 
+
+    -- Pros of Tailwind
+
+    - code is less
+    - no duplicate code
+    - easy to use 
+    - bundle size is small 
+    - faster development
+    - easy to debug
+    - much more customizable lot more control over things
+    - initial learning curve
+
+with JSX and Tailwind we never have to move outside of JS files. 
+
+CONS: 
+    - too much class
+    - too much code
+
+--------------------------------------------------
+
+L-11 Data is the New OIL!
+
+Handling data for a webapp is one of the most crucial part.
+There are various ways to handle data.
+
+Data is maintained in our APP /UI with `state` and `props`.
+    there also more things to it to handle the data.
+
+Different Bw state and prop?
+- Ans: You want a variable which has a scope just with in a container or a component.. It is known as state. It is the local variable.
+
+- what is props?
+    props are values passed/used to pass data from one component to another.
+    props are like local state for the parent.
+
+TS: 16:00 Passing data from App.js to restaurant card 
+
+
+AppLayout
+    localstate (user)
+        -passed into the <Body user = {user} />
+        - in the Body we have RestaurantCard user={user}
+        - in RestaurantCard to h4 tag.
+
+This hierarchy can grow to a lot more ....
+
+Props Drilling 
+
+The passing of prop inside body, inside RestaurantCard and Parent to child to child ... is called as `Prop Drilling`.  
+
+ 
+What if i have to Pass the data from CHILD TO PARENT?
+its one way data binding..
+
+There are very LESS specific cases where you'll need data from children to parent ...
+only small cases 
+
+We can build our `custom Hooks` 
+we can use our custom hooks anywhere we want to 
+- just like we have useParams, we can use useParams anywhere in the code and it will give you the url param 
+- but building HOOKS for all these things is also not a viable way..
+
+Data is the most crucial part of managing your application. 
+Data management will decide to a certain level whether your app is good scalable, reusable or not. So always dont Waste your data. Use it wisely. 
+Structure you data well.
+
+CONS of prop drilling:
+    - Prop Drilling is NOT a GOOD way. Some components DOESNOT even requure some props. It just makes our code CLUTTERED. 
+    - Suppose if you have this data (props) passing in from a lot of components, if you change one thing in a SINGLE component one time prop,, IT WILL RERENDER ALL THE COMPONENTS WHICH ALL OF THEM HAVE USING THOSE PROPS.... :(  
+        UNECESSARY CODE... 
+
+46:33

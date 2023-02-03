@@ -56,10 +56,10 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className="search-container">
+      <div className="search-container p-5 bg-[#EEA47FFF] my-1">
         <input
           type="text"
-          className="search-input"
+          className="p-1"
           placeholder="Search"
           value={searchText}
           // BINDING MY STATE VARIABLE TO INPUT BOX. whenever my input gets modified on ui it will be displayed on UI on every change.
@@ -69,7 +69,7 @@ const Body = () => {
           }}
         />
         <button
-          className="search-btn"
+          className="p-2 m-2 bg-#00539CFF rounded-lg text-white bg-purple-900 hover:bg-sky-700"
           onClick={() => {
             const data = filterData(searchText, allRestaurants)
             setFilteredRestaurants(data)
@@ -78,7 +78,7 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className="restaurant-list">
+      <div className="flex flex-wrap bg-[#00539CFF] justify-center">
         {/* i will show in my filtered restaurants */}
         {/* Home-work added in Lec-6 */}
         {filteredRestaurants.length > 0 ? (

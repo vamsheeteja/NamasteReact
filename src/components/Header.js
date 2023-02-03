@@ -5,7 +5,7 @@ import useOnline from '../utils/useOnline'
 
 const Title = () => (
   <a href="/">
-    <img className="logo" alt="logo" src={Logo} />
+    <img className="h-28 pl-2" alt="logo" src={Logo} />
   </a>
 )
 
@@ -19,45 +19,51 @@ const Header = () => {
   const isOnline = useOnline()
 
   return (
-    <div className="header">
-      <Title />
-
-      <div className="nav-items">
-        <ul>
-          <li>
-            <Link to="/" className="link">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" className="link">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className="link">
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link to="" className="link">
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link to="/instamart" className="link">
-              Instamart
-            </Link>
-          </li>
-        </ul>
+    <>
+      <div className="visible sm:hidden md:hidden lg:hidden">
+        <Title />
       </div>
-      <h1>{isOnline ? '✅' : '⛔'}</h1>
-      {/* {isLoggedIn ? (
+      <div className="flex justify-between bg-[#EEA47FFF] shadow-lg ">
+        <span className="hidden sm:block md:block lg:block">
+          <Title />
+        </span>
+        <div className="nav-items">
+          <ul className="flex py-10">
+            <li>
+              <Link to="/" className="px-2 text-xl">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="px-2 text-xl">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="px-2 text-xl">
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="" className="px-2 text-xl">
+                Cart
+              </Link>
+            </li>
+            <li>
+              <Link to="/instamart" className="px-2 text-xl">
+                Instamart
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <h1>{isOnline ? '✅' : '⛔'}</h1>
+        {/* {isLoggedIn ? (
         <button onClick={() => setIsLoggedIn(false)}>Logout</button>
       ) : (
         <button onClick={() => setIsLoggedIn(true)}>Login</button>
       )} */}
-    </div>
+      </div>
+    </>
   )
 }
 

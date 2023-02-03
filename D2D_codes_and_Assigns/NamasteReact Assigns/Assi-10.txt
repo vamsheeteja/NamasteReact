@@ -1,0 +1,95 @@
+L-10 Assignment
+
+1. Explore all the ways of writing CSS.
+There are many ways of writing CSS in our project.
+
+1. Native approach : having a seperate styles.css file and adding styles to our app using the .class approach.
+
+2. Inline CSS: We can use CSS in the html file itself. Advatage is fast updation and mostly used when to debug or test some element and you want the result immedietely.
+
+3. SASS and SCSS: Syntactically Awesome Style Sheets is a CSS preprocessor which adds special features such as variables, nested rules, and mixins into regular css.
+
+- Sass makes CSS more maintainable, themeable, and extendable. It provides a syntax that is more efficient and easier to read and write compared to plain css.
+
+- Sass files are compiled and regualr CSS can be interpretes by web browsers.
+
+- The scss is the syntax for Sass.
+
+4. Component CSS: we define our styles in a component of a website.
+
+- Instead of appling styles to the entire site we write CSS styles for specific parts (component).
+
+- This makes easier manage and maintain the styles, as each component has its own set of styles that do not affect other parts of the site.
+
+2. How do we configure tailwind?
+- There are many ways to configure tailwind depending upon the need.
+like Tailwind CLI, Using postcss, Framework Guides, play CDN.
+
+Since we have use Parcel, the config using Parcel in out project.
+
+STEP 1 installing tailwind
+
+> npm install -D tailwindcss postcss
+> npx tailwind init
+
+the init command will generate `tailwind.config.js`
+
+STEP 2 Configuring PostCss
+> create a `.postcssrc` file in your project root, and enable the `tailwindcss` plugin.
+
+.postcssrc file
+
+{
+ "plugins": {
+"tailwindcss": {}
+ }
+}
+
+STEP  3 Configure your template paths
+Add the paths to all of your template files in your `tailwind.config.js` file.
+
+
+tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+ content: [
+"./src/**/*.{html,js,ts,jsx,tsx}",
+ ],
+ theme: {
+extend: {},
+ },
+ plugins: [],
+}
+
+STEP 5 Adding the tailwind directives in your CSS.
+
+create a ./src/index.css file and add the `@tailwind` directives for each of Tailwind's layers.
+
+index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+DONE.!
+
+
+3. In tailwind.config.js, what does all the keys mean (content, theme, extend, plugins) ?
+
+content: here we specify the folder and its all files that will be using the Tailwind (syntax)
+
+theme: here we can define our own colors, fontFamily customizable. So if we define, then we cannot use the tailwind default color. we have to stick to our own pallette
+
+theme/extend: here we can extend the pallete like we can use both the tailwind colors and also our own defined..
+
+
+4. Why do we have .postcssrc file ?
+
+The .postcssrc file is a configuration file for PostCss, a popular CSS post-processor.
+
+- PostCss allows Devs to use CSS with modern features and syntax, which are then transformed into compatible CSS for older browsers.
+
+- The .postcssrc file specifies the plugins that should be used to process the CSS and any options for those plugins.
+
+
+----THE END-----
+JO DIKTHA HAI WO BIKTHA HAI 
