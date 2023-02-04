@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react' // added in L-11, to import useContext for using context
 import Logo from '../assets/img/foodvilla.png'
 import { Link } from 'react-router-dom'
 import useOnline from '../utils/useOnline'
+import UserContext from '../utils/UserContext'
 
 const Title = () => (
   <a href="/">
@@ -18,6 +19,8 @@ const Header = () => {
 
   const isOnline = useOnline()
 
+  const { user } = useContext(UserContext) // added in L-11
+
   return (
     <>
       <div className="visible sm:hidden md:hidden lg:hidden">
@@ -30,33 +33,43 @@ const Header = () => {
         <div className="nav-items">
           <ul className="flex py-10">
             <li>
-              <Link to="/" className="px-2 text-xl">
+              <Link to="/" className="px-2 text-xl hover:text-purple-700">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/about" className="px-2 text-xl">
+              <Link to="/about" className="px-2 text-xl hover:text-purple-700">
                 About
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="px-2 text-xl">
+              <Link
+                to="/contact"
+                className="px-2 text-xl hover:text-purple-700"
+              >
                 Contact
               </Link>
             </li>
             <li>
-              <Link to="" className="px-2 text-xl">
+              <Link to="" className="px-2 text-xl hover:text-purple-700">
                 Cart
               </Link>
             </li>
             <li>
-              <Link to="/instamart" className="px-2 text-xl">
+              <Link
+                to="/instamart"
+                className="px-2 text-xl hover:text-purple-700"
+              >
                 Instamart
               </Link>
             </li>
           </ul>
         </div>
         <h1>{isOnline ? '✅' : '⛔'}</h1>
+        <span className="p-10 font-bold text-red-900">
+          {user.name /* added in L-11*/} - {user.email}
+        </span>
+
         {/* {isLoggedIn ? (
         <button onClick={() => setIsLoggedIn(false)}>Logout</button>
       ) : (

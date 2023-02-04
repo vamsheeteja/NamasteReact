@@ -1,17 +1,18 @@
 import RestaurantCard from './RestaurantCard'
 import { restaurantList } from '../config'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Shimmer from './Shimmer'
 import { Link } from 'react-router-dom'
 import { filterData } from '../utils/helper'
 import useOnline from '../utils/useOnline'
+import UserContext from '../utils/UserContext'
 const Body = () => {
   // at any given point of time : i want all my restaurants or filetered restaurants
   // whenever we are filtering we have to filter from all restaurants
   const [allRestaurants, setAllRestaurants] = useState([]) // (O.O) understand why this is Added. For Searching flexibility
   const [filteredRestaurants, setFilteredRestaurants] = useState([])
   const [searchText, setSearchText] = useState('') // returns = [variable name, function to update the variable]
-
+  const { user, setUser } = useContext(UserContext)
   useEffect(() => {
     // API call
     getRestaurants()
@@ -77,6 +78,15 @@ const Body = () => {
         >
           Search
         </button>
+
+        <input
+          value={user.name}
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        ></input>
+        <input
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        ></input>
       </div>
       <div className="flex flex-wrap bg-[#00539CFF] justify-center">
         {/* i will show in my filtered restaurants */}

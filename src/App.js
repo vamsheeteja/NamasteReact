@@ -13,6 +13,7 @@ import RestaurantMenu from './components/RestaurantMenu.js'
 // import Profile from './components/Profile.js'
 import Profile from './components/ProfileClass.js'
 import Shimmer from './components/Shimmer.js'
+import UserContext from './utils/UserContext.js'
 // import Instamart from './components/Instamart.js' // we gonna do LAZY LOAD This
 
 // lazy comes from react
@@ -25,15 +26,25 @@ const About = lazy(() => import('./components/About'))
 
 // Structure you layout
 const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: 'Vamshee Teja',
+    email: 'vamshee.teja@gmail.com',
+  }) // suppose i want this userInfo everywhere(header, footer, body,,etc) in my app. Props drilling is a bad approach
+  // whenever you have a use case like this where you need SAME data across all my app you have to STORE THE DATA AT A CENTRAL STAGE
+  // (that central storage can be a local storage but local storage is something inside browser, but we are talking about React State.) // And updating the local storage is the HEAVY/COSTLY operation. You need to have this data in a react app, you have to store it in a central space. React gives us acess to this central space which is known as REACT-CONTEXT. we can also use Redux-store
+
+  // why cant we use a GLOBAL variable ... Becoz React not TRACKING IT, react is not triggering its Reconciliation algo, React Context is a very powerful tool powered by React
+
   return (
-    <React.Fragment>
+    <UserContext.Provider value={{ user: user, setUser: setUser }}>
+      {/* TRY THIS ONE ALSO <UserContext.Provider value={user}> // OVERWRITING THE DEFAULT VALUE..*/}
       <Header />
       {/* This is the Outlet where we have to FILL out Different pages here */}
       {/* Outlet will be filled by Children components */}
       {/* All the children will be going into outlet according to the ROUTE */}
       <Outlet />
       <Footer />
-    </React.Fragment>
+    </UserContext.Provider>
   )
 }
 

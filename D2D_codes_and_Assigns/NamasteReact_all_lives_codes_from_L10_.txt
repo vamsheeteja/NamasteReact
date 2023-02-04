@@ -170,4 +170,420 @@ CONS of prop drilling:
     - Suppose if you have this data (props) passing in from a lot of components, if you change one thing in a SINGLE component one time prop,, IT WILL RERENDER ALL THE COMPONENTS WHICH ALL OF THEM HAVE USING THOSE PROPS.... :(  
         UNECESSARY CODE... 
 
-46:33
+46:33 
+
+const Instamart = () => {
+  return (
+    <div>
+      <AboutInstaMart />
+      <DetailOfInstaMart />
+      <TeamInstaMart />
+      <Product />
+      <Careers />                      how would you build components for these ?
+    </div>                                we can build different components for these but at the
+  )                                       end of the day these are different sections.
+}
+
+Can i make a reusable component section?
+
+TS: 57:45 show and hide the section's description
+
+#1 Let us have a HIDE and UNHIDE state variable in this section
+
+import { useState } from 'react'
+const Section = ({ title, description }) => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  return (
+    <div className="border border-black p-2 m-2">
+      <h3 className="font-bold text-xl">{title}</h3>
+      {/* Built our own Accordion */}
+      {isVisible ? (
+        <button
+          className="cursor-pointer underline"
+          onClick={() => setIsVisible(false)}
+        >
+          Hide
+        </button>
+      ) : (
+        <button
+          className="cursor-pointer underline"
+          onClick={() => setIsVisible(true)}
+        >
+          Show
+        </button>
+      )}
+
+      {isVisible && <p>{description}</p>}
+    </div>
+  )
+}
+
+const Instamart = () => {
+  return (
+    <div>
+      <h1 className="text-3xl p-2 m-2">Instamart</h1>
+      <Section
+        title={'About Instamart'}
+        description={
+          'Lorem ipsum dolor sit amet. Et internos placeat a repellat quibusdam ut quisquam placeat eos deleniti aliquam sit consectetur voluptas et eius excepturi ex ipsum corporis. Et fuga blanditiis sed aperiam modi et accusamus unde At galisum officiis ea aliquid soluta? Eum libero deserunt non quibusdam error et aliquid illo ea aspernatur saepe ut suscipit possimus. Vel eius enim in iusto perferendis eum ipsam libero et voluptatem debitis!'
+        }
+      />
+      <Section
+        title={'Team Instamart'}
+        description={
+          'Lorem ipsum dolor sit amet. Et internos placeat a repellat quibusdam ut quisquam placeat eos deleniti aliquam sit consectetur voluptas et eius excepturi ex ipsum corporis. Et fuga blanditiis sed aperiam modi et accusamus unde At galisum officiis ea aliquid soluta? Eum libero deserunt non quibusdam error et aliquid illo ea aspernatur saepe ut suscipit possimus.'
+        }
+      />
+      <Section
+        title={'Careers'}
+        description={
+          'Lorem ipsum dolor sit amet. Et internos placeat a repellat quibusdam ut quisquam placeat eos deleniti aliquam sit consectetur voluptas et eius excepturi ex ipsum corporis. Et fuga blanditiis sed aperiam modi et accusamus unde At galisum officiis ea aliquid soluta? Eum libero deserunt non quibusdam error et aliquid illo ea aspernatur saepe ut suscipit possimus. Vel eius enim in iusto perferendis eum ipsam libero et voluptatem debitis!'
+        }
+      />
+      {/* <AboutInstaMart />
+      <DetailOfInstaMart />
+      <TeamInstaMart />
+      <Product />
+      <Careers /> */}
+    </div>
+  )
+}
+
+export default Instamart
+
+--------------------------------------------------
+
+1:07:00 collapsable Accordion
+
+THIS IS PLAYING WITH DATA 
+
+The three sections have different States and different Props. They donot SHARE A COMMON STATE.
+
+WE CANNOT DIRECTLY MODIFY THE STATE OF ANOTHER SIBLING FROM ONE COMPONENT.
+
+IMPO: 
+WE HAVE TO PLAY A SMART GAME.. INSTEAD OF THIS SECTIONS MAINTAINING ITS OWN STATES, WE CAN MAINTAIN ITS STATE INITS PARENT. AND PARENT WILL DECIDE WHETHER TO SHOW WHAT..
+
+I WILL TAKE THE CONTROL OF SHOW HIDE FROM SECTION (CHILDREN) TO THE PARENT.. THIS IS KNOWN AS `LIFTING THE STATE UP`. (VERY IMPORTANT)
+
+TS: 1:25:00 Accordion
+
+TS: 1:33:00 BAD CODE..
+
+TS: 2:08:50.. New Feature in AppLayout we have a userinfo, setUser 
+
+How do i check for logged in user ? 
+Initially we can have DUMMY Names over here.
+
+How would build a login type of flow ?
+what do you to build it. There would be an API which takes username, password and returns you this userinfo..
+  userEffect
+
+useEffect[() => {
+  // authenticate user
+}]
+
+
+// Structure you layout
+const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: 'Vamshee Teja',
+    email: 'vamshee.teja@gmail.com',
+  }) // suppose i want this userInfo everywhere(header, footer, body,,etc) in my app. Props drilling is a bad approach
+  // whenever you have a use case like this where you need SAME data across all my app you have to STORE THE DATA AT A CENTRAL STAGE
+  // (that central storage can be a local storage but local storage is something inside browser, but we are talking about React State.) // And updating the local storage is the HEAVY/COSTLY operation. You need to have this data in a react app, you have to store it in a central space. React gives us acess to this central space which is known as REACT-CONTEXT. we can also use Redux-store
+
+  // why cant we use a GLOBAL variable ... Becoz React not TRACKING IT, react is not triggering its Reconciliation algo, React Context is a very powerful tool powered by React
+
+
+TS: 2:18:00 Created UserContext.js
+
+We can have multiple context in our APP.
+
+Context is like CONSTANT file and i can use it any where i want 
+
+i dont have to pass any props  
+                    any state 
+        This is just some piece of data in a central store it is independent
+
+        the context is not tied to the component
+
+        state (useState) and props is there are tied to the component
+
+  
+
+TS: 2:35:00 why do we require props then ?
+
+  Context is a useState for whole application...
+
+useContext is HOOK 
+  In class components we donot have hooks, so how can we use useContext in Class based components..
+
+  Ans: is we'll use the context as a CONTAINER..
+
+  <UserContext.consumer>
+
+  <UserContext.consumer />
+
+
+TS: 2:42:00 Provider
+ we can modify our UserContext using a Provider
+  <UserContext.Provider value={user}> 
+      <Header />
+      <Outlet />
+      <Footer />
+    </UserContext.Provider>
+
+TS: 2:53:00 WOW RANDOM STUFF  AWESOME>>>>>>> REACT CONTEXT>> KIND OF LIKE 2way BINDING
+
+
+React-router-dom is using React.Context behind the scenes ,... `.Povider`
+
+
+Body.json
+import RestaurantCard from './RestaurantCard'
+import { restaurantList } from '../config'
+import { useState, useEffect, useContext } from 'react'
+import Shimmer from './Shimmer'
+import { Link } from 'react-router-dom'
+import { filterData } from '../utils/helper'
+import useOnline from '../utils/useOnline'
+import UserContext from '../utils/UserContext'
+const Body = () => {
+  // at any given point of time : i want all my restaurants or filetered restaurants
+  // whenever we are filtering we have to filter from all restaurants
+  const [allRestaurants, setAllRestaurants] = useState([]) // (O.O) understand why this is Added. For Searching flexibility
+  const [filteredRestaurants, setFilteredRestaurants] = useState([])
+  const [searchText, setSearchText] = useState('') // returns = [variable name, function to update the variable]
+  const { user, setUser } = useContext(UserContext)
+  useEffect(() => {
+    // API call
+    getRestaurants()
+  }, [])
+
+  // the call happens aynchronously
+  async function getRestaurants() {
+    const data = await fetch(
+      'https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.310302&lng=78.518064&page_type=DESKTOP_WEB_LISTING',
+    )
+    const json = await data.json()
+    // console.log(json)
+    // We have to use Optional chaining.
+    setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+    setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+    // console.log(setAllRestaurants)
+  }
+
+  const isOnline = useOnline()
+  if (!isOnline) {
+    return (
+      <h1>
+        {' '}
+        ⛔Looks like you are Offline, Check you Internet Connection and try
+        Again
+      </h1>
+    )
+  }
+
+  // Conditional Rendering
+  // if restaurant is empty => load shimmer ui
+  // if restaurant has data then load actual data ui
+
+  // Avoid rendering
+  // A K A Early Return
+  if (!allRestaurants) return null // or some message <h1> no all resto </h1>
+
+  // if (filteredRestaurants?.length == 0)
+  // return <h1> No Restaurant found with {searchText}</h1>
+
+  return allRestaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <>
+      <div className="search-container p-5 bg-[#EEA47FFF] my-1">
+        <input
+          type="text"
+          className="p-1"
+          placeholder="Search"
+          value={searchText}
+          // BINDING MY STATE VARIABLE TO INPUT BOX. whenever my input gets modified on ui it will be displayed on UI on every change.
+          // YOU CAN SEE IN DEV TOOLs IN => index.html header -> value attribute
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
+        />
+        <button
+          className="p-2 m-2 bg-#00539CFF rounded-lg text-white bg-purple-900 hover:bg-sky-700"
+          onClick={() => {
+            const data = filterData(searchText, allRestaurants)
+            setFilteredRestaurants(data)
+          }}
+        >
+          Search
+        </button>
+
+        <input
+          value={user.name}
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        ></input>
+        <input
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        ></input>
+      </div>
+      <div className="flex flex-wrap bg-[#00539CFF] justify-center">
+        {/* i will show in my filtered restaurants */}
+        {/* Home-work added in Lec-6 */}
+        {filteredRestaurants.length > 0 ? (
+          filteredRestaurants.map((restaurant) => {
+            return (
+              // #1
+              // <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+
+              // # 2
+              // Added this code in Lec 7 timestamp 2:30:00
+              <Link
+                className="restaurant-card-link"
+                to={'/restaurant/' + restaurant.data.id}
+                key={restaurant.data.id}
+              >
+                {/* {console.log(restaurant?.data?.id)} */}
+                <RestaurantCard {...restaurant.data} />
+              </Link>
+            )
+          })
+        ) : (
+          <h1> No Restaurant found with {searchText}</h1>
+        )}
+      </div>
+    </>
+  )
+}
+
+export default Body
+
+App.js
+
+import React, { lazy, Suspense, useState } from 'react'
+import ReactDOM from 'react-dom/client'
+import Header from './components/Header.js'
+import Body from './components/Body'
+import Footer from './components/Footer'
+// This `createBrowserRouter` function from react-router-dom which help us create ROUTING
+//Timestamp : 48:25 There is a component RouterProvider that helps in provinding appRouter to our APP.
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+// import About from './components/About.js' // commented in L-9 for case of lazy loading
+import Contact from './components/Contact.js'
+import Error from './components/Error.js'
+import RestaurantMenu from './components/RestaurantMenu.js'
+// import Profile from './components/Profile.js'
+import Profile from './components/ProfileClass.js'
+import Shimmer from './components/Shimmer.js'
+import UserContext from './utils/UserContext.js'
+// import Instamart from './components/Instamart.js' // we gonna do LAZY LOAD This
+
+// lazy comes from react
+// this is different import
+const Instamart = lazy(() => import('./components/Instamart')) // it like a Dynamic Import
+// Upon on Demand Loading -> upon render -> suspend loading
+
+// for practice case writing my About component in Lazy loading..
+const About = lazy(() => import('./components/About'))
+
+// Structure you layout
+const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: 'Vamshee Teja',
+    email: 'vamshee.teja@gmail.com',
+  }) // suppose i want this userInfo everywhere(header, footer, body,,etc) in my app. Props drilling is a bad approach
+  // whenever you have a use case like this where you need SAME data across all my app you have to STORE THE DATA AT A CENTRAL STAGE
+  // (that central storage can be a local storage but local storage is something inside browser, but we are talking about React State.) // And updating the local storage is the HEAVY/COSTLY operation. You need to have this data in a react app, you have to store it in a central space. React gives us acess to this central space which is known as REACT-CONTEXT. we can also use Redux-store
+
+  // why cant we use a GLOBAL variable ... Becoz React not TRACKING IT, react is not triggering its Reconciliation algo, React Context is a very powerful tool powered by React
+
+  return (
+    <UserContext.Provider value={{ user: user, setUser: setUser }}>
+      {/* TRY THIS ONE ALSO <UserContext.Provider value={user}> // OVERWRITING THE DEFAULT VALUE..*/}
+      <Header />
+      {/* This is the Outlet where we have to FILL out Different pages here */}
+      {/* Outlet will be filled by Children components */}
+      {/* All the children will be going into outlet according to the ROUTE */}
+      <Outlet />
+      <Footer />
+    </UserContext.Provider>
+  )
+}
+
+// this is place we where give links to the /path.
+// Routing Configuration. This configuration is an ARRAY. it contains objects. List of paths and element..
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    // which has to be loaded on "/". <AppLayout /> must be defined FIRST (thats why placed after defining AppLayout)
+    element: <AppLayout />,
+    errorElement: <Error />,
+    // We can create children of route
+    children: [
+      // NOTE: we have to also pass a children for the BODY Component
+      {
+        path: '/',
+        element: <Body />,
+      },
+      {
+        path: '/about',
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <About />
+          </Suspense>
+        ),
+        children: [
+          {
+            // "/profile" then react-router-dom will consider this as `localhost:1234/profile`. SO DONT WRITE /profile
+            // `/` slash means from the route
+            path: 'profile', // react-router-dom will convert this to `localhost:1234/parentpath/{path}`
+            element: <Profile />,
+          },
+        ],
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
+      },
+      {
+        path: '/restaurant/:resId',
+        element: <RestaurantMenu />,
+      },
+      {
+        path: '/instamart',
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Instamart />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+])
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+// now root will render according to the `appRouter` configuration
+// here router is a PROPs
+root.render(<RouterProvider router={appRouter} />) // rendering a react functional component
+
+Q) can we have nested contexts..
+
+
+SUMMARY 
+Learnings in L-11
+  - Props drilling
+  - lifting the state up
+  - built our own Accordion
+  - how imp data is 
+  - how to create a context
+  - how to update a context
+  - lot of things about data
+  - react dev tool
+  - profiler, container
+  -- uff 
