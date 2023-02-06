@@ -1,0 +1,41 @@
+Assi-11 
+
+1. What is prop drilling ? 
+	The passing of props from grandparent component to the parent component to the child comoponent to ... so on This flow of the data is called as Prop Drilling.
+	
+	This is a bad practise because of the following reasons: 
+		- Except the source and destination components all the intermediate comoponents may not require the props, still they hold the props.
+		
+		- The main disadvantage is if any thing is changed in the props, REACT WILL RERENDER THE ALL THE COMPONENTS which are holding the props..
+		
+2. What is lifting the state up ? 
+	Lifting the state up in React refers to a technique used to share state information between components.
+	
+	- In React, state should be kept in the HIGHEST COMMON ANCESTOR COMPONENT that needs to access it, instead of duplicating the state across multiple components.
+	
+	- When components need to share state that is managed by a parent component, the state can be "lifted up" to the parent component and passed down as props to its child component. This makes the state information easier to manage and helps to ensure that the components stay in sync with each other. 
+	
+	- Lifting the state up is a key concept in React and is a Fundamental technique for managing complex components interactions.
+	
+3. What is Context Provider and Context Consumer?
+
+	Generally we use Context in our app(functional components) using useContext() HOOK. 
+	But we do not have Hook concept in the Class Based Components. So we were using <UserContext.consumer>
+
+	<UserContext.consumer>
+
+		// consumer is for using context in CBCs
+
+	<UserContext.consumer />
+	
+	We can modify our userContext using a provider
+	
+	<UserContext.Provider value = {user}>  
+	
+	// Note: UserContext is a file (Context) which has being created in Namaste React Session Project.
+	
+4. If you dont pass a value to the provider does it take the default value?
+	If a default value is specified in the provider's code, then it will be used, if no value is passed to it. 
+	If no defaut value is specified, then it may throw an error or produce unexpected results. 
+	
+	
