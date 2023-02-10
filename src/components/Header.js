@@ -3,6 +3,8 @@ import Logo from '../assets/img/foodvilla.png'
 import { Link } from 'react-router-dom'
 import useOnline from '../utils/useOnline'
 import UserContext from '../utils/UserContext'
+import { useSelector } from 'react-redux' // added in L-12
+import store from '../utils/store'
 
 const Title = () => (
   <a href="/">
@@ -21,12 +23,14 @@ const Header = () => {
 
   const { user } = useContext(UserContext) // added in L-11
 
+  const cartItems = useSelector((store) => store.cart.items) // added in L-12 i want to subscribe to my store.cart.items
+  console.log(cartItems)
   return (
     <>
       <div className="visible sm:hidden md:hidden lg:hidden">
         <Title />
       </div>
-      <div className="flex justify-between bg-[#EEA47FFF] shadow-lg ">
+      <div className="flex justify-between bg-[#EEA47FFF]  shadow-lg ">
         <span className="hidden sm:block md:block lg:block">
           <Title />
         </span>
@@ -51,16 +55,16 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="" className="px-2 text-xl hover:text-purple-700">
-                Cart
-              </Link>
-            </li>
-            <li>
               <Link
                 to="/instamart"
                 className="px-2 text-xl hover:text-purple-700"
               >
                 Instamart
+              </Link>
+            </li>
+            <li>
+              <Link to="/cart" className="px-2 text-xl hover:text-purple-700">
+                Cart - {cartItems.length} Items
               </Link>
             </li>
           </ul>

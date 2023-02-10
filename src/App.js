@@ -15,6 +15,9 @@ import Profile from './components/ProfileClass.js'
 import Shimmer from './components/Shimmer.js'
 import UserContext from './utils/UserContext.js'
 // import Instamart from './components/Instamart.js' // we gonna do LAZY LOAD This
+import { Provider } from 'react-redux'
+import store from './utils/store'
+import Cart from './components/Cart.js'
 
 // lazy comes from react
 // this is different import
@@ -36,15 +39,17 @@ const AppLayout = () => {
   // why cant we use a GLOBAL variable ... Becoz React not TRACKING IT, react is not triggering its Reconciliation algo, React Context is a very powerful tool powered by React
 
   return (
-    <UserContext.Provider value={{ user: user, setUser: setUser }}>
-      {/* TRY THIS ONE ALSO <UserContext.Provider value={user}> // OVERWRITING THE DEFAULT VALUE..*/}
-      <Header />
-      {/* This is the Outlet where we have to FILL out Different pages here */}
-      {/* Outlet will be filled by Children components */}
-      {/* All the children will be going into outlet according to the ROUTE */}
-      <Outlet />
-      <Footer />
-    </UserContext.Provider>
+    <Provider store={store}>
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        {/* TRY THIS ONE ALSO <UserContext.Provider value={user}> // OVERWRITING THE DEFAULT VALUE..*/}
+        <Header />
+        {/* This is the Outlet where we have to FILL out Different pages here */}
+        {/* Outlet will be filled by Children components */}
+        {/* All the children will be going into outlet according to the ROUTE */}
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
+    </Provider>
   )
 }
 
@@ -94,6 +99,10 @@ const appRouter = createBrowserRouter([
             <Instamart />
           </Suspense>
         ),
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
       },
     ],
   },

@@ -1,0 +1,126 @@
+Assignment - 12 
+
+1. useContext vs Redux.
+	
+	- Both Context and Redux are a way of Managing the Data in our Application. 
+	- These are state management tools for React Applications, but they approach state management in different ways.
+	
+	-`useContext` is a hook provided by the React library. 
+		- it allows us to share state between components without passing props down the component tree manually. 
+		- `useContext` allows you to create a context object and pass data to it, and then access that data in any component
+		that needs it. 
+		- This is simpler solution that Redux and is suitable for Small to medium-sized projects.
+	
+	- Redux on the other end is a more Robust state management solution that is commonly used in large-scale React Applications. 
+	- Redux uses a centralized store to hold the applications state, and provides a way to update the state in a predictable and organized manner. 
+	- Redux also makes it easy to debug state changes, and enables efficient testing of you state management code.
+	
+	conclusion: 
+		for simple state management: use Contexts
+		for complex ll ll                      : use redux 
+		
+2. Advantage of using Redux toolkit over Redux?
+	
+	Redux toolkit offers several improvements over the standard Redux library, making it a better choice for many React devs.
+	Pros are:
+		- Simplified API
+		- Improved Performance
+		- Built-In Testing utilities 
+		- Improved Debugging
+		- Easy Configuration
+		
+3. Explain Dispatcher?
+	
+	- Dispatcher is a mechanism for dispatching an action, which is a plain js object that represents an update to the state of your application.
+	
+	- The main role of the dispatcher in Redux is to coordinate updates to the state of the application by allowing you to dispatch actions to the store. The store is the central repository of state in a Redux application, and the dispatcher is the mechanism for updating the state.
+	
+	Typical use of Dispatcher:
+		- `when you click on that + button` (usually any button), triggering an action..
+		- the code `dispatches an action` to the store, which is an object that describes the desired update to the state of the application.
+		- The store receives the action and uses a `reducer` function to update the state in response to the action. 
+		- The reducer is a pure function that takes the current state of the application and the action as input and returns a new state that represents the updated state.
+		- The updated state is now availble to all components in you application, which can use it to re-render themseleves with new data.
+		
+	In this way, the dispatcher is responsible for managing the flow of actions from the components in your application to the store, allowing you to manage state updates in a centralized and predictable manner.
+	
+4. Explain reducer ?
+	
+	- A reducer function is used to manage the state of our application in a Redux store. It is responsible for taking the current state of the applcation and an action, and returning a new state that represents the updated state. 
+	- The new state is then used by the store to update the state of the application.
+	
+	- A reducer function must be a PURE FUNCTION, meaning it should not have any side effects and should return the same output given the same input. This ensures that the state of the application is predictable and can be easily tested.
+	
+5. Explain Slice ?
+	- `Slice` refers to a particular portion of the redux store.
+
+	- slice refers to a piece of the state tree that belongs to a specific feature or domain in your application.
+	
+	for eg. consider our app has data related to users and products. 
+	- now we can manage that data by having two seperate slices of state: one of use data and other for product data.
+	
+	- The main purpose of slicing the state into seperate pieces is to make it easier to manage and update the state in your application. Each slice of state can have its own set of actions and reducers, which makes it easier to reason about the state changes related to that specific slice.
+
+	Ex. of how we could create slices of state in a Redux store
+	
+	' ' '
+		import { combineReducers } from 'redux'
+		import userReducer from './...'
+		import productReducer from '../..'
+		
+		const rootReducer = combineReducers({
+			user: userReducer,
+			product: productReducer
+		})
+	
+		export default rootReducer
+	
+	' ' '
+	
+	here we have two slices `user' and `product`. Each slice is managed by its own reducer function. `userReducer` and `productReducer` function is used to combine the individual reducers into a single root reducer, which can then be used to create the redux store. 
+	
+6. Explain Selector ?
+	- In Redux, a `selector` is a function that takes the current state of the store as input and returns a derived piece of data from it. Selector are used to access specific pieces of state in a Redux store.
+	- They provide a convenient way to separate the concerns of data management and presentation.
+	 
+	Eg. Consider a Redux store that manages a list of items. You might have a selector that returns only the items that are marked as "favorites"
+	
+	js. 
+	const getFavorites = (state) => state.items.filter(item => item.isFavorite);
+	
+	here getFavorites is a `selector` that takes the current state of the store as input and returns an array of only the items that are marked as "favorites". You can then use this selector in your presentation layer to diaplay the favorite items to the user. 
+	
+	- Selectors can be used to make state udpate more efficient by memoizing their results. This means that the selector only re-calculates its result when the relevant piece of state has changed, which can greatly improve the performance of our application.
+	
+	In short- selectors in redux provide a clean and efficient way to access specific preces of state in a store and use it for presentation purposes. 
+	
+7. Explain createSlice and its configuration ? 
+	
+	- `createSlice` is function used to generate a slice in the Redux state mangement library. It is imported from the redux toolkit package, which provides a more  convenient way to write and manage redux store.
+	
+	- The `createSlice` function takes an 'object' as its configuration argument, which specifies 
+		the initial state, 
+		the reducers, and 
+		any additional logic for handling the state updates. 
+		
+		example
+		
+			import {createSlice} from '@reduxjs/toolkit'
+			
+			const counterSlice = createSlice({
+				name: 'counter', // optional
+				initialState: { value: 8},
+				reducers: {
+					increment: (state) => { state.value += 1},
+					decrement: (state) => { state.value -= 1},
+					reset: (state) => { state.value = 0}
+				}
+			})
+			
+	- `name`: (optional) string that defines the name of the slice, which will be used as the key in the redux store.
+	- `initialState`: an object that defines the initial state for the slice.
+	- 'reducers': an object that maps actions types to reducer functions. The reducer functions receive the current state as an argument and perform updates to the state based on the action type. 
+	- 'extraReducers': (optional) an object that maps action types to reducer functions that can handle actions that are not handled by `reducers` object.
+	- `immutable`: (optional) a boolean that controls whether or not the state should be treated a immutable data structure. By def. the state is mutable.
+	
+	

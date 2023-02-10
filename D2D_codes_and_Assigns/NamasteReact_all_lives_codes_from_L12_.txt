@@ -1,0 +1,290 @@
+Lecture 12 Lets build our Store
+
+jsx things that we write in the code that power the UI.
+
+Data Layer: All the things Passing the data from one component to another,
+            data management between state props,
+            context..
+
+Handling data in our application is a very crucial thing.. if we have a very BIG data.
+
+If we have a HUGE application which has humongous data and which is a production ready app then to manage the data we use a library called REDUX.
+
+Pros of Redux.
+why do we need redux?
+    we need redux to manage our data layer of the application. Handling huge amount of data.
+
+Redux is that place where we handle the data..
+
+Why did we use Context?
+    To Avoid Prop Drilling.
+
+refer to Notes (xournal doc) many things written there...
+
+What context can be made?
+    use can use darkmode stuff using context.
+    cart 
+    wishlist
+
+Instead of creating different contexts, we can create a Redux store. 
+
+Redux - History..
+    used for data management.
+Major issues with using Redux: Redux Cons
+    it is complex to SetUp
+    it has a Huge Learning Curve, need to remember a lot of stuff
+    
+Today we'll build The Cart flow .. flow of lot data 
+
+    What is Redux Store at the EOD?
+        Huge Big Object, which has different sections.
+    
+    All the components will be able to access Redux Store.
+
+    Context and Redux store is a central thing, seperate entity different from web app.
+
+    In our Application the different ways of Handling data is 
+        1. state and props, tied to the components, they work in Parent-Child Hierarchy
+        2. React context is like a central place like a big Gloabal Object. we can access it from anywhere in our app.
+        3. Similarly we have Redux Store..
+
+    Can we multiple contexts? Yes
+    Can we have multiple Redux store? No, we'll have a single store.
+    we'll create logical seperation of out store, slices of the store.
+    it can have a use slice, cart slice, theme slice..etc ... multiple such slices.
+
+    A slice is a small portion of our store.
+
+
+Our component CANNOT DIRECTLY modify the store. One way Data binding like..
+
+I'll have to DISPATCH AN ACTION. lets give the name `addItem()` this Action will call a function and that function will modify our cart.
+
+________________________________________________________________________________________________
+WHEN WE'LL CLICK ON THE PLUS BUTTON, IT WILL DISPATCH AN ACTION WHICH WILL CALL A FUNCTION WHICH MODIFIES THE SLICE OF THE STORE.
+________________________________________________________________________________________________
+
+When we have a Large application, we dont want Random components to Randomly modify our store.
+we want a process asssociated to it.
+We need to keep a track of everything.
+    This is a full fledge better way of handling data
+    
+    We are kind of like breaking down our App into smaller pieces.. Microservice architecture.
+    It is seperation of concern, modular. Good way.
+
+Architecture of Redux. \\
+
+Okay so we have discussed how to update the cart ie if we click on the plus button, it will dispatch an action which will call a function `reducer` which will update the slice of the store.
+
+Now How we are gonna Read the store (cart)?
+    `selector`: to read the store. 
+
+
+REVISING - The Big Picture
+
+    click on + button -> dispatched an action -> which calls Reducer function ->  which update the slice of the store
+
+    slice of the store -> call the selector (i am selecting the slice/portion of the store) -> this will update my cart
+
+    we use `selector` to read the data.
+    selector is a HOOK (useSelector) -> function at EOD
+
+    When we're selecting a slice of store.. it is known as SUBSCRIBING the Store.
+    
+        for eg. the Cart component has subscribed to the store, that means it reads something from the store.
+            That means whenever my store will modify, my cart will automatically modify.
+
+
+    We need one more extra library:
+        > npm i @reduxjs/toolkit
+                                redux core job is to MAINTAIN AND MANAGE THE STORE, clear the slices and maintain it.
+        > npm i react-redux
+                            this library is a brige between Redux and React.
+
+New file store.js created (in src/utils/)
+
+Just like we provided the context to all my app in the root component App.js
+
+Similarly we'll provide our store to all my app in App.js
+
+in store.js
+
+import { configureStore } from "@reduxjs/toolkit"
+// function you to create and config store..
+const store = configureStore({
+    
+})
+
+export default store
+
+in App.js
+    import {Provider} from "react-redux"
+    import store from ../src/utils
+
+    <Provider store={store}>
+        ---// remember prop `store`. Redux will be using it 
+    </Provider>
+
+TS: 1:20:29 Lets create slices.
+
+import {createSlice} from "@reduxjs/toolkit"
+
+const cartSlice = createSlice({})
+
+How do we modify our cart ?
+    by creating a `reducers`.
+    This `reducers` are CALLED on dispatch of an Action.
+
+TS: cartSlice.js
+
+import { createSlice } from '@reduxjs/toolkit'
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: {
+    // initial value of the cart
+    // Lets put an empty items.
+    items: [],
+  },
+  // this reducers are called on dispatch of an action
+  reducers: {
+    // this is the place where i will tell what action will call what reducer function.
+    // reducer at eod is a function.
+    // here the mapping bw action and reducer function.
+    // addItem is an action and it is mapped to a reducer function.
+    addItem: (state, action) => {
+      /*
+       * this reducer function takes in two params.
+       * state and action payload
+       * state is the initial state and action is the data which is coming in.
+       * action payload is the place where i will get the items which i have to add to my cart.
+       * when we will be dispatching our actions (on clicking that `ADD`/ + button) right then we will use this.
+       * This reducers functions DOES NOT RETURN ANY THING. IT TAKES STATE AND MODIFY IT.
+       */
+
+      state.items.push(action.payload)
+    },
+    clearCart: (state) => {
+      state.items = []
+    },
+  },
+})
+
+
+/* 
+    * why we are (export) returning kind of stuff
+    * When we have created createSlice it returns a BIG object
+    * 
+    * cartSlice = {
+            actions = {
+                all of the actions which we have written
+                addItem,
+                removeItem,
+                clearCart
+            },
+            reducer: {
+                combined reducers.
+            }
+    }
+*/
+
+// export actions and reducer
+export const { addItem, removeItem, clearCart } = cartSlice.actions // 'actions'
+
+// it will combine all reducers and make it one reducer.
+export default cartSlice.reducer // it is `reducer`
+
+________________________________________________________________________________________________
+Basically action-reducer is like key-value....
+
+TS: 1:44:00 Configuring slice
+
+
+
+
+
+
+
+
+
+
+
+
+We created a Store 
+    used configureStore() -RTK (imported from react-tool-kit)
+
+Provide my store to app
+    provider component, key (props) was {store}
+    <Provider store = {store}> - import from react-redux
+
+Slice 
+    used createSlice (api) from RTK
+    createSlice({
+        name: "",
+        initialState: 
+        reducers: {
+            // this is an object
+            // action and its corresponding reducer functions..
+            addItem: (state, action) => { Just DIRECTLY MODIFY the state.// NOT RETURN STMTS
+            
+                state = action.payload
+            }
+        }
+    })
+export cont {addItem, removeItems} = cartSlice.actions
+export default cartSlice.reducer;
+
+After creating the slice, Put that slice in Store 
+
+configureStore({
+    // REMEMBER In our app we will be having a lot of slices and each slice will be exporting its reducer. all those reducer will come into the reducer object.
+    reducer: {
+        nameOfTheSlice : and slice file..
+    }
+
+})
+
+TS: 1:56:50 Subscibing to the store.
+
+useSelector() from react-redux
+
+Header.js
+const cartItems = useSelector((store) => store.cart.items) // added in L-12 i want to subscribe to my store.cart.items
+
+RestaurantMenu.js
+const restaurant = useGetRestaurantMenu(resId)
+  const dispatch = useDispatch()
+  const handleAddItem = () => {
+    // this function to Dispatch an action and pass the payload.
+    // Point to Note: addItem will come from the cartSlice...
+    // addItem was an action remember...
+    // dispatch will come from another important hook. useDispatch from react-redux
+    dispatch(addItem('Grapes'))
+  }
+
+TS: 2:08:51 
+When we were creating slices all the api/function are coming from core react-tool-kit.
+configureStore, createSlice() 
+
+
+But when were doing useSelector, useDispatch, Provider related to our components..so different...
+they all are coming from react-redux.
+
+
+  const handleAddItem = () => {
+    // this function to Dispatch an action and pass the payload.
+    // Point to Note: addItem will come from the cartSlice...
+    // addItem was an action remember...
+    // dispatch will come from another important hook. useDispatch from react-redux
+    dispatch(addItem('Grapes'))
+  }
+
+        <div>
+        <button
+          className="p-2 m-5 bg-green-500"
+          onClick={() => handleAddItem()}
+        >
+          {' '}
+          Add{' '}
+        </button>
+      </div>
